@@ -16,8 +16,8 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Film Archive",
-  description: "Personal film photography archive",
+  title: "film me",
+  description: "feel me",
 };
 
 export default function RootLayout({

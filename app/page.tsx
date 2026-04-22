@@ -29,11 +29,11 @@ export default async function HomePage() {
         <header className="mb-4">
           <div className="flex items-end justify-between">
             <h1
-              className="font-display leading-none tracking-widest uppercase"
-              style={{ fontSize: "clamp(3rem, 8vw, 6rem)", color: "var(--text)", fontWeight: 300 }}
+              className="font-display leading-none"
+              style={{ fontSize: "clamp(3rem, 8vw, 6rem)", color: "var(--text)", fontWeight: 300, letterSpacing: "0.05em" }}
             >
-              Film<br />
-              <em style={{ color: "var(--amber)", fontStyle: "italic" }}>Archive</em>
+              film<br />
+              <em style={{ color: "var(--amber)", fontStyle: "italic" }}>me</em>
             </h1>
             <div className="text-right pb-2" style={{ color: "var(--text-muted)", fontSize: "0.65rem", letterSpacing: "0.15em" }}>
               <div>{String(totalRolls).padStart(2, "0")} ROLLS</div>
