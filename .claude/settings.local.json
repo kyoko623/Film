@@ -32,7 +32,8 @@
       "Bash(git -C /Users/zhangyifan/film commit -m 'Remove white background from film icon, remove square frame for empty rolls *)",
       "Bash(git -C /Users/zhangyifan/film commit -m 'Redesign: darkroom archive aesthetic with Cormorant + Space Mono *)",
       "Bash(git -C /Users/zhangyifan/film commit -m 'Rebrand to '\\\\''film me'\\\\'' — feel me *)",
-      "Bash(git -C /Users/zhangyifan/film commit -m 'Rename to filmee *)"
+      "Bash(git -C /Users/zhangyifan/film commit -m 'Rename to filmee *)",
+      "Bash(git -C /Users/zhangyifan/film commit -m 'Always show film icon on homepage, redesign roll detail page *)"
     ]
   }
 }
