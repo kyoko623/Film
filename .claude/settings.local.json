@@ -14,7 +14,15 @@
       "Bash(npm install *)",
       "Bash(git -C /Users/zhangyifan/film add -A)",
       "Bash(git -C /Users/zhangyifan/film commit -m ' *)",
-      "Bash(git -C /Users/zhangyifan/film push)"
+      "Bash(git -C /Users/zhangyifan/film push)",
+      "Bash(git -C /Users/zhangyifan/film add app/page.tsx)",
+      "Bash(git -C /Users/zhangyifan/film commit -m 'Force dynamic rendering on homepage to avoid build-time blob calls *)",
+      "Bash(git -C /Users/zhangyifan/film add app/admin/page.tsx app/api/rolls/route.ts)",
+      "Bash(git -C /Users/zhangyifan/film commit -m 'Add error display in admin and better API error messages *)",
+      "Bash(git -C /Users/zhangyifan/film add lib/auth.ts app/api/debug/route.ts)",
+      "Bash(git -C /Users/zhangyifan/film commit -m 'Fix auth whitespace handling, add debug endpoint *)",
+      "Bash(git -C /Users/zhangyifan/film commit -m 'Rename auth env var to FILM_ADMIN_KEY to avoid Vercel sensitive detection *)",
+      "Bash(git -C /Users/zhangyifan/film commit -m 'Explicitly pass token to all blob calls, improve debug endpoint *)"
     ]
   }
 }

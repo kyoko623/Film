@@ -27,7 +27,7 @@ export async function DELETE(request: Request, { params }: Params) {
 
   const photo = rolls[rollIndex].photos[photoIndex];
   try {
-    await del(photo.filename);
+    await del(photo.filename, { token: process.env.BLOB_READ_WRITE_TOKEN });
   } catch {
     // Continue even if blob deletion fails
   }

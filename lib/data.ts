@@ -1,11 +1,17 @@
 import { put, list } from "@vercel/blob";
 import type { FilmRoll, FilmStockGroup } from "@/types";
 
+function getToken(): string {
+  return process.env.BLOB_READ_WRITE_TOKEN ?? "";
+}
+
 async function getMetadataUrl(): Promise<string | null> {
   if (process.env.BLOB_ROLLS_URL) {
     return process.env.BLOB_ROLLS_URL;
   }
-  const { blobs } = await list({ prefix: "rolls-data.json" });
+  const token = getToken();
+  if (!token) return null;
+  const { blobs } = await list({ prefix: "rolls-data.json", token });
   return blobs[0]?.url ?? null;
 }
 
@@ -27,9 +33,11 @@ export async function getRollById(id: string): Promise<FilmRoll | undefined> {
 }
 
 export async function saveAllRolls(rolls: FilmRoll[]): Promise<void> {
+  const token = getToken();
   await put("rolls-data.json", JSON.stringify(rolls), {
     access: "public",
     allowOverwrite: true,
+    token,
   });
 }
 

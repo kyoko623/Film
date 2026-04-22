@@ -23,7 +23,7 @@ export async function DELETE(request: Request, { params }: Params) {
   // Delete all photo blobs
   for (const photo of roll.photos) {
     try {
-      await del(photo.filename);
+      await del(photo.filename, { token: process.env.BLOB_READ_WRITE_TOKEN });
     } catch {
       // Continue even if individual blob deletion fails
     }

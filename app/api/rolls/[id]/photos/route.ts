@@ -45,6 +45,7 @@ export async function POST(request: Request, { params }: Params) {
     const photoId = `${id}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
     const blob = await put(`photos/${id}/${photoId}.${ext}`, file, {
       access: "public",
+      token: process.env.BLOB_READ_WRITE_TOKEN,
     });
 
     newPhotos.push({
