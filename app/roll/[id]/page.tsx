@@ -10,35 +10,70 @@ interface PageProps {
 export default async function RollPage({ params }: PageProps) {
   const { id } = await params;
   const roll = await getRollById(id);
-
   if (!roll) notFound();
 
+  const meta = [
+    { label: "FILM", value: roll.filmStock },
+    { label: "ROLL", value: `#${roll.rollNumber}` },
+    { label: "DATE", value: roll.date || "—" },
+    { label: "LOCATION", value: roll.location || "—" },
+    { label: "CAMERA", value: roll.camera || "—" },
+    { label: "FRAMES", value: String(roll.photos.length).padStart(2, "0") },
+  ];
+
   return (
-    <main className="min-h-screen bg-stone-950 text-stone-100">
-      <div className="max-w-6xl mx-auto px-6 py-16">
+    <main className="min-h-screen" style={{ background: "var(--bg)" }}>
+      <div className="max-w-6xl mx-auto px-6 pt-16 pb-24">
+
+        {/* Back */}
         <Link
           href="/"
-          className="inline-block text-stone-500 hover:text-stone-300 text-sm tracking-wider uppercase mb-12 transition-colors"
+          style={{ color: "var(--amber-dim)", fontSize: "0.6rem", letterSpacing: "0.2em", fontFamily: "var(--font-mono)" }}
+          className="inline-block mb-14 hover:opacity-100 transition-opacity"
         >
-          ← Archive
+          ← ARCHIVE
         </Link>
 
+        {/* Header */}
         <header className="mb-12">
-          <p className="text-stone-500 text-xs tracking-widest uppercase mb-2">{roll.filmStock}</p>
-          <h1 className="text-2xl font-light tracking-widest uppercase mb-4">
-            Roll #{roll.rollNumber}
+          <p style={{ color: "var(--amber)", fontSize: "0.6rem", letterSpacing: "0.25em", fontFamily: "var(--font-mono)", marginBottom: "0.75rem" }}>
+            {roll.filmStock.toUpperCase()}
+          </p>
+          <h1
+            className="font-display leading-none mb-8"
+            style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", fontWeight: 300, letterSpacing: "0.15em", color: "var(--text)" }}
+          >
+            Roll <em style={{ color: "var(--amber)", fontStyle: "italic" }}>#{roll.rollNumber}</em>
           </h1>
-          <div className="flex flex-wrap gap-6 text-sm text-stone-400">
-            {roll.date && <span>{roll.date}</span>}
-            {roll.location && <span>{roll.location}</span>}
-            {roll.camera && <span>{roll.camera}</span>}
-            <span>{roll.photos.length} frames</span>
+
+          {/* Metadata table */}
+          <div
+            className="grid gap-x-8 gap-y-1"
+            style={{ gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", borderTop: "1px solid var(--border)", paddingTop: "1.25rem" }}
+          >
+            {meta.map(({ label, value }) => (
+              <div key={label}>
+                <div style={{ color: "var(--text-dim)", fontSize: "0.55rem", letterSpacing: "0.2em", fontFamily: "var(--font-mono)", marginBottom: "0.15rem" }}>
+                  {label}
+                </div>
+                <div style={{ color: "var(--text)", fontSize: "0.7rem", letterSpacing: "0.1em", fontFamily: "var(--font-mono)" }}>
+                  {value}
+                </div>
+              </div>
+            ))}
           </div>
+
           {roll.description && (
-            <p className="mt-4 text-stone-400 text-sm max-w-xl">{roll.description}</p>
+            <p
+              className="font-display mt-6"
+              style={{ color: "var(--text-muted)", fontSize: "1.1rem", fontStyle: "italic", maxWidth: "36rem", lineHeight: 1.7 }}
+            >
+              {roll.description}
+            </p>
           )}
         </header>
 
+        {/* Photos */}
         <PhotoGrid photos={roll.photos} rollId={roll.id} />
       </div>
     </main>
