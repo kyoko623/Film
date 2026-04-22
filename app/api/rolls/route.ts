@@ -20,20 +20,25 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "filmStock and rollNumber are required" }, { status: 400 });
   }
 
-  const rolls = await getAllRolls();
-  const newRoll: FilmRoll = {
-    id: `roll-${Date.now()}`,
-    filmStock,
-    rollNumber: Number(rollNumber),
-    date: date || "",
-    location: location || "",
-    camera: camera || "",
-    description: description || "",
-    photos: [],
-  };
+  try {
+    const rolls = await getAllRolls();
+    const newRoll: FilmRoll = {
+      id: `roll-${Date.now()}`,
+      filmStock,
+      rollNumber: Number(rollNumber),
+      date: date || "",
+      location: location || "",
+      camera: camera || "",
+      description: description || "",
+      photos: [],
+    };
 
-  rolls.push(newRoll);
-  await saveAllRolls(rolls);
+    rolls.push(newRoll);
+    await saveAllRolls(rolls);
 
-  return NextResponse.json(newRoll, { status: 201 });
+    return NextResponse.json(newRoll, { status: 201 });
+  } catch (e) {
+    console.error("POST /api/rolls error:", e);
+    return NextResponse.json({ error: String(e) }, { status: 500 });
+  }
 }

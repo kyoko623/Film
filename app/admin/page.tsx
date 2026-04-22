@@ -78,6 +78,7 @@ function CreateRollForm({ token, onCreated }: { token: string; onCreated: (roll:
     description: "",
   });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   function set(key: string, value: string) {
     setForm((f) => ({ ...f, [key]: value }));
@@ -87,14 +88,22 @@ function CreateRollForm({ token, onCreated }: { token: string; onCreated: (roll:
     e.preventDefault();
     if (!form.filmStock || !form.rollNumber) return;
     setLoading(true);
-    const res = await api("/api/rolls", token, {
-      method: "POST",
-      body: JSON.stringify(form),
-    });
-    if (res.ok) {
-      const roll = await res.json();
-      onCreated(roll);
-      setForm({ filmStock: "", rollNumber: "", date: "", location: "", camera: "", description: "" });
+    setError("");
+    try {
+      const res = await api("/api/rolls", token, {
+        method: "POST",
+        body: JSON.stringify(form),
+      });
+      if (res.ok) {
+        const roll = await res.json();
+        onCreated(roll);
+        setForm({ filmStock: "", rollNumber: "", date: "", location: "", camera: "", description: "" });
+      } else {
+        const data = await res.json().catch(() => ({}));
+        setError(`错误 ${res.status}：${data.error ?? "请求失败"}`);
+      }
+    } catch (e) {
+      setError(`网络错误：${String(e)}`);
     }
     setLoading(false);
   }
@@ -118,8 +127,9 @@ function CreateRollForm({ token, onCreated }: { token: string; onCreated: (roll:
         disabled={loading}
         className="bg-stone-700 hover:bg-stone-600 text-stone-100 px-6 py-2 text-sm tracking-wider uppercase transition-colors disabled:opacity-50"
       >
-        {loading ? "创建中…" : "创建"}
+          {loading ? "创建中…" : "创建"}
       </button>
+      {error && <p className="text-red-400 text-xs mt-3">{error}</p>}
     </form>
   );
 }
