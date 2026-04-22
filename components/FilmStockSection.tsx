@@ -18,28 +18,28 @@ export default function FilmStockSection({ group }: FilmStockSectionProps) {
         {group.rolls.map((roll) => (
           <Link key={roll.id} href={`/roll/${roll.id}`}>
             <div className="group cursor-pointer">
-              <div className="aspect-square bg-stone-800 mb-2 overflow-hidden relative">
-                {roll.photos.length > 0 ? (
-                  // eslint-disable-next-line @next/next/no-img-element
+              {roll.photos.length > 0 ? (
+                <div className="aspect-square bg-stone-800 mb-2 overflow-hidden relative">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={roll.photos[0].filename}
                     alt={`${roll.filmStock} roll ${roll.rollNumber}`}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-stone-900">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src="/film-icon.jpg"
-                      alt="film roll"
-                      className="w-4/5 h-4/5 object-contain opacity-80 group-hover:scale-105 transition-transform duration-300"
-                    />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span className="text-white text-xs">{roll.photos.length} frames</span>
                   </div>
-                )}
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <span className="text-white text-xs">{roll.photos.length} frames</span>
                 </div>
-              </div>
+              ) : (
+                <div className="mb-2 flex items-center justify-center">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/film-icon.png"
+                    alt="film roll"
+                    className="w-full object-contain opacity-90 group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+              )}
               <div className="text-xs text-stone-400">
                 <div className="font-medium text-stone-300">Roll #{roll.rollNumber}</div>
                 {roll.location && <div className="truncate">{roll.location}</div>}
