@@ -16,7 +16,7 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "film me",
+  title: "filmee",
   description: "feel me",
 };
 

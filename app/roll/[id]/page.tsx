@@ -31,7 +31,7 @@ export default async function RollPage({ params }: PageProps) {
           style={{ color: "var(--amber-dim)", fontSize: "0.6rem", letterSpacing: "0.2em", fontFamily: "var(--font-mono)" }}
           className="inline-block mb-14 hover:opacity-100 transition-opacity"
         >
-          ← FILM ME
+          ← FILMEE
         </Link>
 
         {/* Header */}

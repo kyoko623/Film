@@ -32,8 +32,7 @@ export default async function HomePage() {
               className="font-display leading-none"
               style={{ fontSize: "clamp(3rem, 8vw, 6rem)", color: "var(--text)", fontWeight: 300, letterSpacing: "0.05em" }}
             >
-              film<br />
-              <em style={{ color: "var(--amber)", fontStyle: "italic" }}>me</em>
+              film<em style={{ color: "var(--amber)", fontStyle: "italic" }}>ee</em>
             </h1>
             <div className="text-right pb-2" style={{ color: "var(--text-muted)", fontSize: "0.65rem", letterSpacing: "0.15em" }}>
               <div>{String(totalRolls).padStart(2, "0")} ROLLS</div>
