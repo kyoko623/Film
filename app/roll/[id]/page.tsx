@@ -13,48 +13,47 @@ export default async function RollPage({ params }: PageProps) {
   if (!roll) notFound();
 
   return (
-    <main className="min-h-screen" style={{ background: "var(--bg)" }}>
+    <main className="min-h-screen">
 
       {/* Sticky top bar */}
       <div
         className="sticky top-0 z-40 flex items-center justify-between px-6 py-4"
         style={{
-          background: "rgba(8,6,4,0.88)",
-          backdropFilter: "blur(16px)",
+          background: "rgba(6,4,2,0.85)",
+          backdropFilter: "blur(20px)",
           borderBottom: "1px solid var(--border)",
         }}
       >
         <Link
           href="/"
-          style={{ color: "var(--text-dim)", fontSize: "0.58rem", letterSpacing: "0.22em", fontFamily: "var(--font-mono)" }}
-          className="hover:opacity-70 transition-opacity"
+          style={{ fontSize: "0.7rem", letterSpacing: "0.22em" }}
+          className="hover:opacity-60 transition-opacity"
         >
-          ← FILMEE
+          <span style={{ color: "var(--text-dim)" }}>← FILM</span><span className="glow" style={{ color: "var(--amber)" }}>EE</span>
         </Link>
-        <div className="flex items-center gap-5" style={{ fontFamily: "var(--font-mono)", fontSize: "0.58rem", letterSpacing: "0.12em" }}>
+        <div className="flex items-center gap-5" style={{ fontSize: "0.6rem", letterSpacing: "0.14em" }}>
           <span style={{ color: "var(--text-dim)" }}>{roll.filmStock}</span>
           <span className="glow" style={{ color: "var(--amber)" }}>ROLL #{roll.rollNumber}</span>
           <span style={{ color: "var(--text-dim)" }}>{roll.photos.length} FRAMES</span>
         </div>
       </div>
 
-      {/* Hero header */}
-      <div className="px-6 pt-16 pb-10 max-w-6xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-14">
+      {/* Hero */}
+      <div className="px-6 pt-20 pb-10 max-w-6xl mx-auto">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-10 mb-14">
           <div>
-            <p style={{ color: "var(--amber)", fontSize: "0.52rem", letterSpacing: "0.3em", fontFamily: "var(--font-mono)", marginBottom: "1rem" }}>
+            <p style={{ color: "var(--amber)", fontSize: "0.55rem", letterSpacing: "0.3em", marginBottom: "1.2rem" }}>
               {roll.filmStock.toUpperCase()}
             </p>
             <h1
-              className="font-display leading-none glow"
-              style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)", fontWeight: 300, color: "var(--text)" }}
+              className="font-display glow leading-none"
+              style={{ fontSize: "clamp(3.5rem, 8vw, 7rem)", color: "var(--text)" }}
             >
-              Roll&nbsp;
-              <em style={{ color: "var(--amber)", fontStyle: "italic" }}>#{roll.rollNumber}</em>
+              ROLL <span style={{ color: "var(--amber)" }}>#{roll.rollNumber}</span>
             </h1>
           </div>
 
-          <div className="grid grid-cols-2 gap-x-10 gap-y-4" style={{ fontFamily: "var(--font-mono)" }}>
+          <div className="grid grid-cols-2 gap-x-10 gap-y-5">
             {[
               { label: "DATE",     value: roll.date     || "—" },
               { label: "LOCATION", value: roll.location || "—" },
@@ -62,8 +61,8 @@ export default async function RollPage({ params }: PageProps) {
               { label: "FRAMES",   value: String(roll.photos.length).padStart(2, "0") },
             ].map(({ label, value }) => (
               <div key={label}>
-                <div style={{ color: "var(--text-dim)", fontSize: "0.5rem", letterSpacing: "0.22em", marginBottom: "0.2rem" }}>{label}</div>
-                <div style={{ color: "var(--text)", fontSize: "0.68rem", letterSpacing: "0.08em" }}>{value}</div>
+                <div style={{ color: "var(--text-dim)", fontSize: "0.5rem", letterSpacing: "0.25em", marginBottom: "0.25rem" }}>{label}</div>
+                <div style={{ color: "var(--text)", fontSize: "0.7rem", letterSpacing: "0.1em" }}>{value}</div>
               </div>
             ))}
           </div>
@@ -71,13 +70,13 @@ export default async function RollPage({ params }: PageProps) {
 
         {roll.description && (
           <p
-            className="font-display mb-12"
             style={{
               color: "var(--text-muted)",
-              fontSize: "1.2rem",
-              fontStyle: "italic",
+              fontSize: "0.85rem",
+              letterSpacing: "0.06em",
+              lineHeight: 1.9,
               maxWidth: "38rem",
-              lineHeight: 1.8,
+              marginBottom: "3rem",
               borderLeft: "1px solid var(--amber-dim)",
               paddingLeft: "1.5rem",
             }}
@@ -89,8 +88,13 @@ export default async function RollPage({ params }: PageProps) {
         <div style={{ borderTop: "1px solid var(--border)", marginBottom: "2.5rem" }} />
       </div>
 
-      <div className="px-6 pb-24 max-w-6xl mx-auto">
-        <PhotoGrid photos={roll.photos} rollId={roll.id} />
+      {/* Photos */}
+      <div
+        style={{ background: "rgba(6,4,2,0.75)" }}
+      >
+        <div className="px-6 pb-24 max-w-6xl mx-auto">
+          <PhotoGrid photos={roll.photos} rollId={roll.id} />
+        </div>
       </div>
     </main>
   );

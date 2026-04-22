@@ -10,8 +10,8 @@ export default function FilmStockSection({ group }: FilmStockSectionProps) {
     <section>
       <div className="flex items-baseline justify-between mb-5">
         <h2
-          className="font-display uppercase tracking-widest"
-          style={{ fontSize: "1.5rem", fontWeight: 400, color: "var(--text)", letterSpacing: "0.2em" }}
+          className="font-display"
+          style={{ fontSize: "1.8rem", color: "var(--text)", letterSpacing: "0.18em" }}
         >
           {group.filmStock}
         </h2>
