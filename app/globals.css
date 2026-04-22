@@ -106,6 +106,12 @@ body::before {
   box-shadow: 0 0 4px var(--amber-glow);
 }
 
+/* ── Pulse (used in film transition hint) ── */
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 0.18; }
+}
+
 /* ── Lightbox ── */
 @keyframes fadeIn {
   from { opacity: 0; }

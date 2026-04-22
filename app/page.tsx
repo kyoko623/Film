@@ -1,17 +1,7 @@
 import { getGroupedByFilmStock } from "@/lib/data";
-import FilmStockSection from "@/components/FilmStockSection";
+import ArchiveView from "@/components/ArchiveView";
 
 export const dynamic = "force-dynamic";
-
-function Sprockets({ count = 28 }: { count?: number }) {
-  return (
-    <div className="sprocket-strip my-8">
-      {Array.from({ length: count }).map((_, i) => (
-        <div key={i} className="sprocket-hole" />
-      ))}
-    </div>
-  );
-}
 
 export default async function HomePage() {
   const groups = await getGroupedByFilmStock();
@@ -65,21 +55,7 @@ export default async function HomePage() {
       <div
         style={{ background: "linear-gradient(to bottom, transparent 0%, rgba(8,6,4,0.92) 6%, rgba(8,6,4,0.96) 100%)" }}
       >
-        <div className="max-w-6xl mx-auto px-6 pt-4 pb-28">
-          <Sprockets count={32} />
-          {groups.length === 0 ? (
-            <p style={{ color: "var(--text-dim)", fontSize: "1rem", letterSpacing: "0.15em" }}>
-              NO ROLLS YET — OPEN /ADMIN TO BEGIN
-            </p>
-          ) : (
-            groups.map((group, i) => (
-              <div key={group.filmStock}>
-                <FilmStockSection group={group} />
-                {i < groups.length - 1 && <Sprockets count={32} />}
-              </div>
-            ))
-          )}
-        </div>
+        <ArchiveView groups={groups} />
       </div>
     </main>
   );
