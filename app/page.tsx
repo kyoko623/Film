@@ -25,30 +25,30 @@ export default async function HomePage() {
   return (
     <main style={{ background: "var(--bg)" }}>
 
-      {/* ── Hero: full-screen video ── */}
+      {/* ── Hero ── */}
       <section className="relative overflow-hidden" style={{ height: "100svh" }}>
         <HeroBackground />
 
-        {/* Overlay gradient */}
+        {/* Bottom gradient fade */}
         <div
           className="absolute inset-0"
-          style={{ background: "linear-gradient(to bottom, rgba(14,11,9,0.15) 0%, rgba(14,11,9,0.5) 70%, rgba(14,11,9,1) 100%)" }}
+          style={{ background: "linear-gradient(to bottom, rgba(8,6,4,0.1) 0%, rgba(8,6,4,0.55) 65%, rgba(8,6,4,1) 100%)" }}
         />
 
         {/* Title */}
         <div className="absolute inset-0 flex flex-col justify-end px-8 pb-16 md:px-14 md:pb-20">
           <h1
-            className="font-display leading-none mb-6"
+            className="font-display leading-none mb-5 glow"
             style={{ fontSize: "clamp(4rem, 12vw, 9rem)", fontWeight: 300, color: "var(--text)", letterSpacing: "0.02em" }}
           >
             film<em style={{ color: "var(--amber)", fontStyle: "italic" }}>ee</em>
           </h1>
           <div
             className="flex items-center gap-6"
-            style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", letterSpacing: "0.18em", color: "var(--text-muted)" }}
+            style={{ fontFamily: "var(--font-mono)", fontSize: "0.58rem", letterSpacing: "0.2em", color: "var(--text-dim)" }}
           >
-            <span>{String(totalRolls).padStart(2, "0")} ROLLS</span>
-            <span style={{ color: "var(--text-dim)" }}>·</span>
+            <span style={{ color: "var(--amber)" }}>{String(totalRolls).padStart(2, "0")} ROLLS</span>
+            <span>·</span>
             <span>{String(totalPhotos).padStart(4, "0")} FRAMES</span>
           </div>
         </div>
@@ -56,19 +56,18 @@ export default async function HomePage() {
         {/* Scroll hint */}
         <div
           className="absolute bottom-8 right-8 flex flex-col items-center gap-2"
-          style={{ color: "var(--text-dim)", fontFamily: "var(--font-mono)", fontSize: "0.5rem", letterSpacing: "0.2em" }}
+          style={{ color: "var(--text-dim)", fontFamily: "var(--font-mono)", fontSize: "0.48rem", letterSpacing: "0.22em" }}
         >
           <span>SCROLL</span>
-          <div style={{ width: "1px", height: "32px", background: "var(--text-dim)", opacity: 0.4 }} />
+          <div style={{ width: "1px", height: "28px", background: "var(--amber-dim)", opacity: 0.5 }} />
         </div>
       </section>
 
       {/* ── Archive ── */}
       <div className="max-w-6xl mx-auto px-6 pt-16 pb-24">
         <Sprockets count={32} />
-
         {groups.length === 0 ? (
-          <p style={{ color: "var(--text-dim)", fontFamily: "var(--font-mono)", fontSize: "0.75rem", letterSpacing: "0.1em" }}>
+          <p style={{ color: "var(--text-dim)", fontFamily: "var(--font-mono)", fontSize: "0.7rem", letterSpacing: "0.15em" }}>
             NO ROLLS YET — OPEN /ADMIN TO BEGIN
           </p>
         ) : (

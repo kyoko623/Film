@@ -6,20 +6,19 @@
 }
 
 :root {
-  --bg: #0e0b09;
-  --bg-surface: #161210;
-  --bg-card: #1c1814;
-  --amber: #c9a86c;
-  --amber-dim: #8a6f3e;
-  --text: #ede5d8;
-  --text-muted: #7a6e62;
-  --text-dim: #4a4038;
-  --border: #2a2420;
+  --bg:          #080604;
+  --bg-surface:  #100c09;
+  --bg-card:     #150f0b;
+  --amber:       #c8551a;
+  --amber-dim:   #7a3010;
+  --amber-glow:  rgba(200, 85, 26, 0.18);
+  --text:        #e8d8c4;
+  --text-muted:  #7a6558;
+  --text-dim:    #3d2e24;
+  --border:      #1e1410;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 html {
   background: var(--bg);
@@ -33,32 +32,80 @@ body {
   position: relative;
 }
 
-/* Film grain overlay */
+/* ── Grain + flicker ── */
+@keyframes flicker {
+  0%   { opacity: 0.038; }
+  20%  { opacity: 0.042; }
+  40%  { opacity: 0.035; }
+  60%  { opacity: 0.045; }
+  80%  { opacity: 0.036; }
+  100% { opacity: 0.040; }
+}
+
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
-  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E");
+  animation: flicker 3s steps(1) infinite;
   pointer-events: none;
   z-index: 9999;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--text-dim); }
+/* ── Scanlines ── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.09) 2px,
+    rgba(0, 0, 0, 0.09) 3px
+  );
+  pointer-events: none;
+  z-index: 9998;
+}
 
-/* Display font utility */
+/* ── Vignette ── */
+.vignette {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 40%, transparent 45%, rgba(4, 2, 1, 0.75) 100%);
+  pointer-events: none;
+  z-index: 9997;
+}
+
+/* ── Phosphor glow ── */
+.glow {
+  text-shadow:
+    0 0 6px var(--amber),
+    0 0 18px var(--amber-glow),
+    0 0 36px rgba(200, 85, 26, 0.08);
+}
+
+/* ── Font utilities ── */
 .font-display {
   font-family: var(--font-display), Georgia, serif;
 }
 
-/* Amber accent */
-.text-amber { color: var(--amber); }
-.border-amber { border-color: var(--amber); }
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--text-dim); }
 
-/* Sprocket strip */
+/* ── Photo frame ── */
+.photo-frame { position: relative; }
+.photo-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 0 1px rgba(200, 85, 26, 0.06);
+  pointer-events: none;
+}
+
+/* ── Sprocket strip ── */
 .sprocket-strip {
   display: flex;
   align-items: center;
@@ -71,26 +118,19 @@ body::before {
   height: 7px;
   border-radius: 50%;
   border: 1px solid var(--amber-dim);
-  opacity: 0.5;
+  opacity: 0.4;
+  box-shadow: 0 0 4px var(--amber-glow);
 }
 
-/* Image treatment */
-.photo-frame {
-  position: relative;
-}
-.photo-frame::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  box-shadow: inset 0 0 0 1px rgba(201, 168, 108, 0.08);
-  pointer-events: none;
-}
-
-/* Lightbox animation */
+/* ── Lightbox ── */
 @keyframes fadeIn {
   from { opacity: 0; }
-  to { opacity: 1; }
+  to   { opacity: 1; }
 }
-.lightbox-enter {
-  animation: fadeIn 0.15s ease;
+.lightbox-enter { animation: fadeIn 0.15s ease; }
+
+/* ── Hide UnicornStudio watermark ── */
+a[href*="unicornstudio"],
+a[href*="unicorn-studio"] {
+  display: none !important;
 }

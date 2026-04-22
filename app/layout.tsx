@@ -27,7 +27,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh" className={`${cormorant.variable} ${spaceMono.variable} h-full`}>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <div className="vignette" />
+        {children}
+      </body>
     </html>
   );
 }
