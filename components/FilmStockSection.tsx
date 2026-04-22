@@ -27,8 +27,13 @@ export default function FilmStockSection({ group }: FilmStockSectionProps) {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-stone-600 text-sm">
-                    No photos
+                  <div className="w-full h-full flex items-center justify-center bg-stone-900">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/film-icon.jpg"
+                      alt="film roll"
+                      className="w-4/5 h-4/5 object-contain opacity-80 group-hover:scale-105 transition-transform duration-300"
+                    />
                   </div>
                 )}
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-2 opacity-0 group-hover:opacity-100 transition-opacity">
