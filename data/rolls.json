@@ -1,0 +1,43 @@
+[
+  {
+    "id": "roll-001",
+    "filmStock": "Kodak Portra 400",
+    "rollNumber": 1,
+    "date": "2024-03-15",
+    "location": "Tokyo, Japan",
+    "camera": "Nikon FM2",
+    "description": "",
+    "photos": [
+      {
+        "id": "roll-001-001",
+        "filename": "roll-001-001.jpg",
+        "caption": ""
+      },
+      {
+        "id": "roll-001-002",
+        "filename": "roll-001-002.jpg",
+        "caption": ""
+      }
+    ]
+  },
+  {
+    "id": "roll-002",
+    "filmStock": "Kodak Portra 400",
+    "rollNumber": 2,
+    "date": "2024-05-20",
+    "location": "Shanghai",
+    "camera": "Nikon FM2",
+    "description": "",
+    "photos": []
+  },
+  {
+    "id": "roll-003",
+    "filmStock": "Fujifilm Superia 400",
+    "rollNumber": 1,
+    "date": "2024-07-10",
+    "location": "Kyoto, Japan",
+    "camera": "Canon AE-1",
+    "description": "",
+    "photos": []
+  }
+]

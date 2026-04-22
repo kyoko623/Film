@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Film Archive
 
-## Getting Started
+个人胶片摄影档案网站。
 
-First, run the development server:
+## 项目结构
+
+```
+film/
+├── data/
+│   └── rolls.json        # 胶卷数据（在这里添加胶卷和照片）
+├── public/
+│   └── photos/           # 照片文件放这里
+├── app/
+│   ├── page.tsx          # 主页（按胶卷类型分组展示）
+│   └── roll/[id]/        # 单卷照片页
+└── components/
+    ├── FilmStockSection   # 胶卷类型区块
+    └── PhotoGrid          # 照片网格 + 灯箱
+```
+
+## 添加胶卷
+
+编辑 `data/rolls.json`，按以下格式添加：
+
+```json
+{
+  "id": "roll-004",
+  "filmStock": "Kodak Portra 400",
+  "rollNumber": 4,
+  "date": "2024-09-01",
+  "location": "Beijing",
+  "camera": "Nikon FM2",
+  "description": "可选描述",
+  "photos": [
+    {
+      "id": "roll-004-001",
+      "filename": "roll-004-001.jpg",
+      "caption": "可选说明"
+    }
+  ]
+}
+```
+
+照片文件放入 `public/photos/` 目录，文件名对应 `filename` 字段。
+
+## 本地开发
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 构建 & 部署
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+项目配置为静态导出，可部署到任何静态托管服务。
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Vercel（推荐）
 
-## Learn More
+1. 推送代码到 GitHub
+2. 在 Vercel 导入仓库，自动检测为 Next.js 项目
+3. 点击 Deploy
 
-To learn more about Next.js, take a look at the following resources:
+### Cloudflare Pages / Netlify / GitHub Pages
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run build     # 生成 out/ 目录
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+将 `out/` 目录内容部署到对应平台即可。

@@ -3,7 +3,18 @@
     "allow": [
       "Bash(npm i *)",
       "Bash(sudo npm *)",
-      "Bash(npx create-next-app@latest *)"
+      "Bash(npx create-next-app@latest *)",
+      "Bash(npm run *)",
+      "Bash(git -C /Users/zhangyifan/film remote -v)",
+      "Bash(git -C /Users/zhangyifan/film log --oneline)",
+      "Bash(git -C /Users/zhangyifan/film remote add origin https://github.com/kyoko623/Film.git)",
+      "Bash(git -C /Users/zhangyifan/film push -u origin main)",
+      "Bash(git -C /Users/zhangyifan/film remote set-url origin git@github.com:kyoko623/Film.git)",
+      "Bash(ssh -T git@github.com)",
+      "Bash(npm install *)",
+      "Bash(git -C /Users/zhangyifan/film add -A)",
+      "Bash(git -C /Users/zhangyifan/film commit -m ' *)",
+      "Bash(git -C /Users/zhangyifan/film push)"
     ]
   }
 }
