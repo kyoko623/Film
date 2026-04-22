@@ -46,7 +46,7 @@ export default async function RollPage({ params }: PageProps) {
               {roll.filmStock.toUpperCase()}
             </p>
             <h1
-              className="font-display glow leading-none"
+              className="font-display glow chromatic leading-none"
               style={{ fontSize: "clamp(3.5rem, 8vw, 7rem)", color: "var(--text)" }}
             >
               ROLL <span style={{ color: "var(--amber)" }}>#{roll.rollNumber}</span>
@@ -85,7 +85,7 @@ export default async function RollPage({ params }: PageProps) {
           </p>
         )}
 
-        <div style={{ borderTop: "1px solid var(--border)", marginBottom: "2.5rem" }} />
+        <hr className="spectrum-line" style={{ marginBottom: "2.5rem" }} />
       </div>
 
       {/* Photos */}

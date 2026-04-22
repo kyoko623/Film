@@ -12,7 +12,7 @@ export default function FilmStockSection({ group, onRollClick }: FilmStockSectio
     <section>
       <div className="flex items-baseline justify-between mb-5">
         <h2
-          className="font-display"
+          className="font-display chromatic"
           style={{ fontSize: "1.8rem", color: "var(--text)", letterSpacing: "0.18em" }}
         >
           {group.filmStock}
