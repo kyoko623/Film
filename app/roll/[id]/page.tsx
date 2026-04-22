@@ -26,12 +26,12 @@ export default async function RollPage({ params }: PageProps) {
       >
         <Link
           href="/"
-          style={{ fontSize: "0.7rem", letterSpacing: "0.22em" }}
+          style={{ fontSize: "1rem", letterSpacing: "0.18em" }}
           className="hover:opacity-60 transition-opacity"
         >
           <span style={{ color: "var(--text-muted)" }}>← FILM</span><span className="glow" style={{ color: "var(--amber)" }}>EE</span>
         </Link>
-        <div className="flex items-center gap-5" style={{ fontSize: "0.6rem", letterSpacing: "0.14em" }}>
+        <div className="flex items-center gap-5" style={{ fontSize: "0.88rem", letterSpacing: "0.12em" }}>
           <span style={{ color: "var(--text-muted)" }}>{roll.filmStock}</span>
           <span className="glow" style={{ color: "var(--amber)" }}>ROLL #{roll.rollNumber}</span>
           <span style={{ color: "var(--text-muted)" }}>{roll.photos.length} FRAMES</span>
@@ -42,7 +42,7 @@ export default async function RollPage({ params }: PageProps) {
       <div className="px-6 pt-20 pb-10 max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-10 mb-14">
           <div>
-            <p style={{ color: "var(--amber)", fontSize: "0.55rem", letterSpacing: "0.3em", marginBottom: "1.2rem" }}>
+            <p style={{ color: "var(--amber)", fontSize: "0.85rem", letterSpacing: "0.22em", marginBottom: "1.2rem" }}>
               {roll.filmStock.toUpperCase()}
             </p>
             <h1
@@ -61,8 +61,8 @@ export default async function RollPage({ params }: PageProps) {
               { label: "FRAMES",   value: String(roll.photos.length).padStart(2, "0") },
             ].map(({ label, value }) => (
               <div key={label}>
-                <div style={{ color: "var(--text-muted)", fontSize: "0.5rem", letterSpacing: "0.25em", marginBottom: "0.25rem" }}>{label}</div>
-                <div style={{ color: "var(--text)", fontSize: "0.7rem", letterSpacing: "0.1em" }}>{value}</div>
+                <div style={{ color: "var(--text-muted)", fontSize: "0.78rem", letterSpacing: "0.2em", marginBottom: "0.25rem" }}>{label}</div>
+                <div style={{ color: "var(--text)", fontSize: "1rem", letterSpacing: "0.08em" }}>{value}</div>
               </div>
             ))}
           </div>
@@ -72,7 +72,7 @@ export default async function RollPage({ params }: PageProps) {
           <p
             style={{
               color: "var(--text-muted)",
-              fontSize: "0.85rem",
+              fontSize: "1.05rem",
               letterSpacing: "0.06em",
               lineHeight: 1.9,
               maxWidth: "38rem",

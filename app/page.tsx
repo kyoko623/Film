@@ -34,8 +34,8 @@ export default async function HomePage() {
         </h1>
         <p style={{
           fontFamily: "var(--font-mono)",
-          fontSize: "0.52rem",
-          letterSpacing: "0.28em",
+          fontSize: "0.82rem",
+          letterSpacing: "0.22em",
           color: "var(--amber)",
           opacity: 0.5,
           marginBottom: "1.2rem",
@@ -44,7 +44,7 @@ export default async function HomePage() {
         </p>
         <div
           className="flex items-center gap-6"
-          style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", letterSpacing: "0.2em" }}
+          style={{ fontFamily: "var(--font-mono)", fontSize: "0.9rem", letterSpacing: "0.18em" }}
         >
           <span className="glow" style={{ color: "var(--amber)" }}>{String(totalRolls).padStart(2, "0")} ROLLS</span>
           <span style={{ color: "var(--text-dim)" }}>·</span>
@@ -54,7 +54,7 @@ export default async function HomePage() {
         {/* Scroll indicator */}
         <div
           className="glow-dim absolute bottom-8 right-8 flex flex-col items-center gap-2"
-          style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)", fontSize: "0.48rem", letterSpacing: "0.22em" }}
+          style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)", fontSize: "0.75rem", letterSpacing: "0.18em" }}
         >
           <span>SCROLL</span>
           <div style={{ width: "1px", height: "28px", background: "var(--amber-dim)", opacity: 0.5 }} />
@@ -68,7 +68,7 @@ export default async function HomePage() {
         <div className="max-w-6xl mx-auto px-6 pt-4 pb-28">
           <Sprockets count={32} />
           {groups.length === 0 ? (
-            <p style={{ color: "var(--text-dim)", fontSize: "0.7rem", letterSpacing: "0.15em" }}>
+            <p style={{ color: "var(--text-dim)", fontSize: "1rem", letterSpacing: "0.15em" }}>
               NO ROLLS YET — OPEN /ADMIN TO BEGIN
             </p>
           ) : (

@@ -31,7 +31,7 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
       <div className="flex flex-col items-center justify-center py-32 gap-6">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/film-icon.png" alt="empty" style={{ width: "72px", opacity: 0.2, filter: "sepia(0.5) hue-rotate(-15deg)" }} />
-        <p style={{ color: "var(--text-dim)", fontFamily: "var(--font-mono)", fontSize: "0.58rem", letterSpacing: "0.22em" }}>
+        <p style={{ color: "var(--text-dim)", fontFamily: "var(--font-mono)", fontSize: "0.88rem", letterSpacing: "0.18em" }}>
           NO FRAMES EXPOSED YET
         </p>
       </div>
@@ -40,7 +40,7 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
 
   return (
     <>
-      <p style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)", fontSize: "0.52rem", letterSpacing: "0.22em", marginBottom: "1.5rem" }}>
+      <p style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)", fontSize: "0.82rem", letterSpacing: "0.18em", marginBottom: "1.5rem" }}>
         {String(photos.length).padStart(2, "0")} FRAMES
       </p>
 
@@ -67,7 +67,7 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
             {/* Frame number */}
             <div
               className="absolute bottom-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity"
-              style={{ padding: "0.3rem 0.5rem", fontSize: "0.48rem", letterSpacing: "0.18em", fontFamily: "var(--font-mono)", color: "var(--amber)", background: "rgba(8,6,4,0.8)", textShadow: "0 0 6px var(--amber)" }}
+              style={{ padding: "0.3rem 0.6rem", fontSize: "0.75rem", letterSpacing: "0.14em", fontFamily: "var(--font-mono)", color: "var(--amber)", background: "rgba(8,6,4,0.8)", textShadow: "0 0 6px var(--amber)" }}
             >
               {String(index + 1).padStart(2, "0")}
             </div>
@@ -87,7 +87,7 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
             className="absolute top-0 left-0 right-0 flex items-center justify-between px-8 py-5"
             style={{ borderBottom: "1px solid var(--border)" }}
           >
-            <span className="glow" style={{ color: "var(--amber)", fontFamily: "var(--font-mono)", fontSize: "0.58rem", letterSpacing: "0.22em" }}>
+            <span className="glow" style={{ color: "var(--amber)", fontFamily: "var(--font-mono)", fontSize: "0.88rem", letterSpacing: "0.18em" }}>
               {String(lightbox + 1).padStart(2, "0")} / {String(photos.length).padStart(2, "0")}
             </span>
             <button
@@ -98,8 +98,8 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
                 border: "1px solid var(--border-visible)",
                 padding: "0.2rem 0.6rem",
                 fontFamily: "var(--font-mono)",
-                fontSize: "0.52rem",
-                letterSpacing: "0.18em",
+                fontSize: "0.82rem",
+                letterSpacing: "0.14em",
               }}
             >
               ESC
