@@ -1,5 +1,6 @@
 import { getGroupedByFilmStock } from "@/lib/data";
 import FilmStockSection from "@/components/FilmStockSection";
+import HeroBackground from "@/components/HeroBackground";
 
 export const dynamic = "force-dynamic";
 
@@ -26,16 +27,7 @@ export default async function HomePage() {
 
       {/* ── Hero: full-screen video ── */}
       <section className="relative overflow-hidden" style={{ height: "100svh" }}>
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-          style={{ opacity: 0.85 }}
-        >
-          <source src="/bg.webm" type="video/webm" />
-        </video>
+        <HeroBackground />
 
         {/* Overlay gradient */}
         <div
