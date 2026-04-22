@@ -15,7 +15,7 @@ export default function FilmStockSection({ group }: FilmStockSectionProps) {
         >
           {group.filmStock}
         </h2>
-        <span style={{ color: "var(--text-dim)", fontSize: "0.55rem", letterSpacing: "0.15em" }}>
+        <span style={{ color: "var(--text-muted)", fontSize: "0.55rem", letterSpacing: "0.15em" }}>
           {String(group.rolls.length).padStart(2, "0")} ROLLS
         </span>
       </div>

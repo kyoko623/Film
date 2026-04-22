@@ -40,7 +40,7 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
 
   return (
     <>
-      <p style={{ color: "var(--text-dim)", fontFamily: "var(--font-mono)", fontSize: "0.52rem", letterSpacing: "0.22em", marginBottom: "1.5rem" }}>
+      <p style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)", fontSize: "0.52rem", letterSpacing: "0.22em", marginBottom: "1.5rem" }}>
         {String(photos.length).padStart(2, "0")} FRAMES
       </p>
 
@@ -93,7 +93,14 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
             <button
               onClick={close}
               className="hover:opacity-60 transition-opacity"
-              style={{ color: "var(--text-dim)", fontFamily: "var(--font-mono)", fontSize: "0.58rem", letterSpacing: "0.22em" }}
+              style={{
+                color: "var(--text)",
+                border: "1px solid var(--border-visible)",
+                padding: "0.2rem 0.6rem",
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.52rem",
+                letterSpacing: "0.18em",
+              }}
             >
               ESC
             </button>
@@ -120,16 +127,16 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
 
           {lightbox > 0 && (
             <button
-              className="absolute left-0 top-0 bottom-0 px-6 flex items-center hover:opacity-50 transition-opacity"
+              className="glow absolute left-0 top-0 bottom-0 px-6 flex items-center hover:opacity-60 transition-opacity"
               onClick={(e) => { e.stopPropagation(); prev(); }}
-              style={{ color: "var(--text-dim)", fontSize: "2rem" }}
+              style={{ color: "var(--amber)", fontSize: "2rem" }}
             >‹</button>
           )}
           {lightbox < photos.length - 1 && (
             <button
-              className="absolute right-0 top-0 bottom-0 px-6 flex items-center hover:opacity-50 transition-opacity"
+              className="glow absolute right-0 top-0 bottom-0 px-6 flex items-center hover:opacity-60 transition-opacity"
               onClick={(e) => { e.stopPropagation(); next(); }}
-              style={{ color: "var(--text-dim)", fontSize: "2rem" }}
+              style={{ color: "var(--amber)", fontSize: "2rem" }}
             >›</button>
           )}
         </div>

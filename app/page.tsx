@@ -27,24 +27,34 @@ export default async function HomePage() {
       {/* ── Hero title ── */}
       <div className="flex flex-col justify-end px-8 md:px-14" style={{ minHeight: "100svh", paddingBottom: "5rem" }}>
         <h1
-          className="font-display glow leading-none mb-4"
+          className="font-display glow title-crt leading-none mb-3"
           style={{ fontSize: "clamp(5rem, 16vw, 12rem)", color: "var(--text)", letterSpacing: "0.04em" }}
         >
           FILM<span style={{ color: "var(--amber)" }}>EE</span>
         </h1>
+        <p style={{
+          fontFamily: "var(--font-mono)",
+          fontSize: "0.52rem",
+          letterSpacing: "0.28em",
+          color: "var(--amber)",
+          opacity: 0.5,
+          marginBottom: "1.2rem",
+        }}>
+          &gt; PERSONAL ARCHIVE INITIALIZED
+        </p>
         <div
           className="flex items-center gap-6"
           style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", letterSpacing: "0.2em" }}
         >
           <span className="glow" style={{ color: "var(--amber)" }}>{String(totalRolls).padStart(2, "0")} ROLLS</span>
           <span style={{ color: "var(--text-dim)" }}>·</span>
-          <span style={{ color: "var(--text-dim)" }}>{String(totalPhotos).padStart(4, "0")} FRAMES</span>
+          <span style={{ color: "var(--text-muted)" }}>{String(totalPhotos).padStart(4, "0")} FRAMES</span>
         </div>
 
         {/* Scroll indicator */}
         <div
-          className="absolute bottom-8 right-8 flex flex-col items-center gap-2"
-          style={{ color: "var(--text-dim)", fontFamily: "var(--font-mono)", fontSize: "0.48rem", letterSpacing: "0.22em" }}
+          className="glow-dim absolute bottom-8 right-8 flex flex-col items-center gap-2"
+          style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)", fontSize: "0.48rem", letterSpacing: "0.22em" }}
         >
           <span>SCROLL</span>
           <div style={{ width: "1px", height: "28px", background: "var(--amber-dim)", opacity: 0.5 }} />
