@@ -22,29 +22,59 @@ export default async function HomePage() {
   );
 
   return (
-    <main className="min-h-screen" style={{ background: "var(--bg)" }}>
-      <div className="max-w-6xl mx-auto px-6 pt-20 pb-24">
+    <main style={{ background: "var(--bg)" }}>
 
-        {/* Header */}
-        <header className="mb-4">
-          <div className="flex items-end justify-between">
-            <h1
-              className="font-display leading-none"
-              style={{ fontSize: "clamp(3rem, 8vw, 6rem)", color: "var(--text)", fontWeight: 300, letterSpacing: "0.05em" }}
-            >
-              film<em style={{ color: "var(--amber)", fontStyle: "italic" }}>ee</em>
-            </h1>
-            <div className="text-right pb-2" style={{ color: "var(--text-muted)", fontSize: "0.65rem", letterSpacing: "0.15em" }}>
-              <div>{String(totalRolls).padStart(2, "0")} ROLLS</div>
-              <div style={{ color: "var(--text-dim)" }}>──────</div>
-              <div>{String(totalPhotos).padStart(4, "0")} FRAMES</div>
-            </div>
+      {/* ── Hero: full-screen video ── */}
+      <section className="relative overflow-hidden" style={{ height: "100svh" }}>
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ opacity: 0.85 }}
+        >
+          <source src="/bg.webm" type="video/webm" />
+        </video>
+
+        {/* Overlay gradient */}
+        <div
+          className="absolute inset-0"
+          style={{ background: "linear-gradient(to bottom, rgba(14,11,9,0.15) 0%, rgba(14,11,9,0.5) 70%, rgba(14,11,9,1) 100%)" }}
+        />
+
+        {/* Title */}
+        <div className="absolute inset-0 flex flex-col justify-end px-8 pb-16 md:px-14 md:pb-20">
+          <h1
+            className="font-display leading-none mb-6"
+            style={{ fontSize: "clamp(4rem, 12vw, 9rem)", fontWeight: 300, color: "var(--text)", letterSpacing: "0.02em" }}
+          >
+            film<em style={{ color: "var(--amber)", fontStyle: "italic" }}>ee</em>
+          </h1>
+          <div
+            className="flex items-center gap-6"
+            style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", letterSpacing: "0.18em", color: "var(--text-muted)" }}
+          >
+            <span>{String(totalRolls).padStart(2, "0")} ROLLS</span>
+            <span style={{ color: "var(--text-dim)" }}>·</span>
+            <span>{String(totalPhotos).padStart(4, "0")} FRAMES</span>
           </div>
-        </header>
+        </div>
 
+        {/* Scroll hint */}
+        <div
+          className="absolute bottom-8 right-8 flex flex-col items-center gap-2"
+          style={{ color: "var(--text-dim)", fontFamily: "var(--font-mono)", fontSize: "0.5rem", letterSpacing: "0.2em" }}
+        >
+          <span>SCROLL</span>
+          <div style={{ width: "1px", height: "32px", background: "var(--text-dim)", opacity: 0.4 }} />
+        </div>
+      </section>
+
+      {/* ── Archive ── */}
+      <div className="max-w-6xl mx-auto px-6 pt-16 pb-24">
         <Sprockets count={32} />
 
-        {/* Content */}
         {groups.length === 0 ? (
           <p style={{ color: "var(--text-dim)", fontFamily: "var(--font-mono)", fontSize: "0.75rem", letterSpacing: "0.1em" }}>
             NO ROLLS YET — OPEN /ADMIN TO BEGIN
