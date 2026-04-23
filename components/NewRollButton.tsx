@@ -36,7 +36,7 @@ export default function NewRollButton() {
   const [authError, setAuthError] = useState("");
   const [authLoading, setAuthLoading] = useState(false);
   const [form, setForm] = useState({
-    filmStock: "", rollNumber: "", date: "", location: "", camera: "", description: "",
+    filmStock: "Kodak Gold 200", rollNumber: "", date: "", location: "", camera: "", description: "",
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -64,7 +64,7 @@ export default function NewRollButton() {
     setPassword("");
     setAuthError("");
     setError("");
-    setForm({ filmStock: "", rollNumber: "", date: "", location: "", camera: "", description: "" });
+    setForm({ filmStock: "Kodak Gold 200", rollNumber: "", date: "", location: "", camera: "", description: "" });
   }
 
   async function handleAuth(e: React.FormEvent) {
@@ -190,16 +190,46 @@ export default function NewRollButton() {
             ) : (
               /* ── Create roll form ── */
               <form onSubmit={handleCreate}>
+                <div style={{ marginBottom: "1.2rem" }}>
+                  <label style={labelStyle}>胶卷型号 *</label>
+                  <div style={{ display: "flex", gap: "0.75rem" }}>
+                    {([
+                      { value: "Kodak Gold 200", icon: "/film-icon.png", label: "KODAK GOLD 200" },
+                      { value: "Fuji 200",       icon: "/fuji-icon.svg",  label: "FUJI 200" },
+                    ] as const).map(opt => (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        onClick={() => set("filmStock", opt.value)}
+                        style={{
+                          border: form.filmStock === opt.value ? "2px solid #111" : "1.5px solid var(--border-soft)",
+                          background: form.filmStock === opt.value ? "rgba(0,0,0,0.05)" : "#fff",
+                          padding: "0.8rem 1rem",
+                          cursor: "pointer",
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          gap: "0.5rem",
+                          minWidth: "110px",
+                          transition: "border-color 0.15s, background 0.15s",
+                        }}
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={opt.icon} alt={opt.label} style={{ width: "56px", height: "56px", objectFit: "contain" }} />
+                        <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", letterSpacing: "0.1em", color: "#111" }}>
+                          {opt.label}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
                 <div style={{
                   display: "grid",
                   gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))",
                   gap: "1rem",
                   marginBottom: "1.2rem",
                 }}>
-                  <div>
-                    <label style={labelStyle}>胶卷型号 *</label>
-                    <input style={inputStyle} value={form.filmStock} onChange={e => set("filmStock", e.target.value)} required placeholder="Kodak Gold 200" />
-                  </div>
                   <div>
                     <label style={labelStyle}>卷号 *</label>
                     <input style={inputStyle} type="number" value={form.rollNumber} onChange={e => set("rollNumber", e.target.value)} required placeholder="1" />

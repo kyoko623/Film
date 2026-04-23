@@ -1,6 +1,12 @@
 import Link from "next/link";
 import type { FilmStockGroup } from "@/types";
 
+function filmIcon(filmStock: string): string {
+  const s = filmStock.toLowerCase();
+  if (s.includes("fuji")) return "/fuji-icon.svg";
+  return "/film-icon.png";
+}
+
 interface FilmStockSectionProps {
   group: FilmStockGroup;
 }
@@ -26,9 +32,10 @@ export default function FilmStockSection({ group }: FilmStockSectionProps) {
             {/* Film icon — no background, just the icon with scale-up on hover */}
             <div className="mb-3 flex items-center justify-center overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/film-icon.png"
-                alt="film roll"
+                src={filmIcon(group.filmStock)}
+                alt={group.filmStock}
                 className="roll-card-icon w-full object-contain"
               />
             </div>

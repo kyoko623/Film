@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" shape-rendering="crispEdges">
+  <!-- Top spool -->
+  <rect x="185" y="28" width="92" height="52" rx="8" fill="#111"/>
+  <rect x="193" y="34" width="76" height="40" rx="6" fill="#222"/>
+  <rect x="198" y="38" width="5" height="32" fill="#333"/>
+  <rect x="208" y="38" width="5" height="32" fill="#333"/>
+  <rect x="218" y="38" width="5" height="32" fill="#333"/>
+  <rect x="228" y="38" width="5" height="32" fill="#333"/>
+  <rect x="238" y="38" width="5" height="32" fill="#333"/>
+  <rect x="248" y="38" width="5" height="32" fill="#333"/>
+  <rect x="258" y="38" width="5" height="32" fill="#333"/>
+
+  <!-- Canister body — Fuji green -->
+  <rect x="118" y="68" width="206" height="344" rx="103" fill="#0c6e35"/>
+  <rect x="118" y="68" width="206" height="344" rx="103" fill="none" stroke="#111" stroke-width="8"/>
+
+  <!-- Metallic sheen stripe -->
+  <rect x="138" y="94" width="18" height="292" rx="9" fill="#1a8a42"/>
+
+  <!-- Label band -->
+  <rect x="126" y="128" width="188" height="184" fill="#0a5c2a"/>
+
+  <!-- FUJI — pixel-style white letters -->
+  <!-- F -->
+  <rect x="138" y="142" width="10" height="58" fill="#fff"/>
+  <rect x="148" y="142" width="30" height="10" fill="#fff"/>
+  <rect x="148" y="165" width="24" height="10" fill="#fff"/>
+  <!-- U -->
+  <rect x="188" y="142" width="10" height="58" fill="#fff"/>
+  <rect x="220" y="142" width="10" height="58" fill="#fff"/>
+  <rect x="198" y="190" width="22" height="10" fill="#fff"/>
+  <!-- J -->
+  <rect x="238" y="142" width="10" height="58" fill="#fff"/>
+  <rect x="228" y="190" width="10" height="10" fill="#fff"/>
+  <!-- I -->
+  <rect x="256" y="142" width="10" height="58" fill="#fff"/>
+
+  <!-- 200 — smaller below FUJI -->
+  <!-- 2 -->
+  <rect x="143" y="214" width="26" height="7" fill="#fff"/>
+  <rect x="162" y="221" width="7" height="14" fill="#fff"/>
+  <rect x="143" y="235" width="26" height="7" fill="#fff"/>
+  <rect x="143" y="242" width="7" height="14" fill="#fff"/>
+  <rect x="143" y="256" width="26" height="7" fill="#fff"/>
+  <!-- 0 -->
+  <rect x="178" y="214" width="26" height="7" fill="#fff"/>
+  <rect x="178" y="256" width="26" height="7" fill="#fff"/>
+  <rect x="178" y="221" width="7" height="35" fill="#fff"/>
+  <rect x="197" y="221" width="7" height="35" fill="#fff"/>
+  <!-- 0 (second) -->
+  <rect x="213" y="214" width="26" height="7" fill="#fff"/>
+  <rect x="213" y="256" width="26" height="7" fill="#fff"/>
+  <rect x="213" y="221" width="7" height="35" fill="#fff"/>
+  <rect x="232" y="221" width="7" height="35" fill="#fff"/>
+
+  <!-- Film exit slot (right of canister) -->
+  <rect x="317" y="174" width="14" height="72" fill="#0a5c2a"/>
+
+  <!-- Film strip body -->
+  <rect x="322" y="163" width="145" height="94" fill="#3d2418"/>
+  <!-- Top sprocket holes -->
+  <rect x="332" y="170" width="22" height="17" rx="3" fill="#c8b48a"/>
+  <rect x="364" y="170" width="22" height="17" rx="3" fill="#c8b48a"/>
+  <rect x="396" y="170" width="22" height="17" rx="3" fill="#c8b48a"/>
+  <!-- Frame area -->
+  <rect x="330" y="191" width="132" height="52" fill="#4d3422"/>
+  <!-- Bottom sprocket holes -->
+  <rect x="332" y="247" width="22" height="17" rx="3" fill="#c8b48a"/>
+  <rect x="364" y="247" width="22" height="17" rx="3" fill="#c8b48a"/>
+  <rect x="396" y="247" width="22" height="17" rx="3" fill="#c8b48a"/>
+</svg>
