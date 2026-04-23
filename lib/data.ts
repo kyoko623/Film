@@ -19,7 +19,10 @@ export async function getAllRolls(): Promise<FilmRoll[]> {
   try {
     const url = await getMetadataUrl();
     if (!url) return [];
-    const res = await fetch(url, { cache: "no-store" });
+    // Cache-bust: Vercel Blob CDN caches public blobs for 1 year by default,
+    // so we append a timestamp to bypass both browser and edge caches.
+    const bustUrl = `${url}${url.includes("?") ? "&" : "?"}t=${Date.now()}`;
+    const res = await fetch(bustUrl, { cache: "no-store" });
     if (!res.ok) return [];
     return (await res.json()) as FilmRoll[];
   } catch {
