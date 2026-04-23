@@ -27,7 +27,7 @@ function RollCard({ roll }: { roll: FilmRoll }) {
           <img
             src={filmIcon(roll.filmStock)}
             alt=""
-            className="roll-card-icon"
+            className={`roll-card-icon${filmIcon(roll.filmStock).includes("fuji") ? " icon-fuji" : ""}`}
             style={{ height: "150px", width: "auto" }}
           />
         </div>
