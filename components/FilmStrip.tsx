@@ -3,110 +3,49 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import type { FilmRoll, Photo } from "@/types";
 
-// Sprocket hole SVG tile (32×28px per hole unit)
-const SPROCKET_SVG = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='28'%3E%3Crect x='8' y='4' width='16' height='20' rx='3' fill='%23040201' stroke='%234a2006' stroke-width='0.75'/%3E%3C/svg%3E")`;
+// ── Sprocket holes: cream/warm-white on dark-brown (matches pixel art reference) ──
+const SPROCKET_SVG = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='28'%3E%3Crect x='7' y='4' width='18' height='20' rx='2' fill='%23c8b48a'/%3E%3C/svg%3E")`;
 
 const sprocketTrack: React.CSSProperties = {
-  height: "28px",
+  height: "30px",
   flexShrink: 0,
-  backgroundColor: "#060402",
+  backgroundColor: "#2d1a0d",
   backgroundImage: SPROCKET_SVG,
   backgroundRepeat: "repeat-x",
-  backgroundSize: "32px 28px",
+  backgroundSize: "32px 30px",
   backgroundPosition: "left center",
 };
 
-// ── Canister ─────────────────────────────────────────────────────────────────
-function Canister({ filmStock, rollNumber }: { filmStock: string; rollNumber: number }) {
-  const parts = filmStock.toUpperCase().split(" ");
-  const brand = parts[0];
-  const iso = parts.find((p) => /^\d+$/.test(p)) ?? parts[parts.length - 1];
+// Strip body color — dark warm brown matching the pixel art film strip
+const STRIP_BG = "#1c0e06";
 
+// ── Canister: pixel-art film-icon.png ────────────────────────────────────────
+function Canister() {
   return (
     <div style={{
-      width: "130px",
       flexShrink: 0,
       height: "100%",
       display: "flex",
       alignItems: "center",
-      justifyContent: "center",
-      paddingLeft: "24px",
-      paddingRight: "4px",
+      paddingLeft: "8px",
+      // Slight negative right margin so the strip "starts" under the film exit
+      marginRight: "-24px",
+      position: "relative",
+      zIndex: 1,
     }}>
-      <div style={{
-        width: "82px",
-        height: "clamp(160px, 44vh, 230px)",
-        borderRadius: "41px",
-        background: "linear-gradient(105deg, #311a0c 0%, #190a04 48%, #311a0c 100%)",
-        border: "1.5px solid #8a4824",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "7px",
-        position: "relative",
-        boxShadow: [
-          "inset 6px 0 14px rgba(255,170,70,0.07)",
-          "inset -6px 0 14px rgba(0,0,0,0.55)",
-          "0 0 32px rgba(200,85,26,0.12)",
-        ].join(", "),
-      }}>
-        {/* Metallic sheen stripe */}
-        <div style={{
-          position: "absolute",
-          left: "11px",
-          top: "28px",
-          bottom: "28px",
-          width: "7px",
-          borderRadius: "4px",
-          background: "linear-gradient(to bottom, rgba(255,200,100,0.2), transparent 40%, rgba(255,200,100,0.09) 80%, transparent)",
-          pointerEvents: "none",
-        }} />
-
-        {/* Brand */}
-        <span style={{
-          fontFamily: "var(--font-display)",
-          fontSize: "1.6rem",
-          color: "var(--amber)",
-          letterSpacing: "0.04em",
-          lineHeight: 1,
-          textShadow: "0 0 10px var(--amber)",
-        }}>{brand}</span>
-
-        {/* ISO */}
-        <span style={{
-          fontFamily: "var(--font-display)",
-          fontSize: "1.1rem",
-          color: "var(--text-muted)",
-          letterSpacing: "0.1em",
-        }}>{iso}</span>
-
-        {/* Divider */}
-        <div style={{ width: "38px", height: "1px", background: "var(--amber-dim)", opacity: 0.5 }} />
-
-        {/* Roll number */}
-        <span style={{
-          fontFamily: "var(--font-mono)",
-          fontSize: "0.65rem",
-          color: "var(--text-dim)",
-          letterSpacing: "0.2em",
-        }}>ROLL {String(rollNumber).padStart(2, "0")}</span>
-
-        {/* Film exit slot */}
-        <div style={{
-          position: "absolute",
-          right: "-11px",
-          top: "50%",
-          transform: "translateY(-50%)",
-          width: "11px",
-          height: "54px",
-          background: "#020100",
-          borderTop: "1px solid #4a2006",
-          borderBottom: "1px solid #4a2006",
-          borderRight: "1px solid #4a2006",
-          borderRadius: "0 2px 2px 0",
-        }} />
-      </div>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/film-icon.png"
+        alt="film canister"
+        style={{
+          height: "88%",
+          width: "auto",
+          objectFit: "contain",
+          display: "block",
+          // Crisp pixel rendering
+          imageRendering: "pixelated",
+        }}
+      />
     </div>
   );
 }
@@ -121,50 +60,64 @@ function MetadataPanel({ roll }: { roll: FilmRoll }) {
 
   return (
     <div style={{
-      width: "220px",
+      width: "210px",
       flexShrink: 0,
       alignSelf: "stretch",
-      borderLeft: "1px solid #180a04",
-      borderRight: "1px solid #180a04",
-      padding: "0 22px",
+      borderLeft: "2px solid #2d1a0d",
+      borderRight: "2px solid #2d1a0d",
+      padding: "0 20px",
       display: "flex",
       flexDirection: "column",
       justifyContent: "center",
-      gap: "20px",
-      background: "#070402",
+      gap: "18px",
+      background: STRIP_BG,
     }}>
+      {/* Film stock label at top of panel */}
+      <div style={{
+        fontFamily: "var(--font-display)",
+        fontSize: "1.4rem",
+        color: "var(--amber)",
+        letterSpacing: "0.06em",
+        textShadow: "0 0 8px var(--amber)",
+        lineHeight: 1,
+        borderBottom: "1px solid #3a2010",
+        paddingBottom: "12px",
+      }}>{roll.filmStock.toUpperCase()}</div>
+
       {fields.map(({ label, value }) => (
         <div key={label}>
           <div style={{
             fontFamily: "var(--font-mono)",
             fontSize: "0.62rem",
-            color: "var(--text-dim)",
+            color: "#6a4830",
             letterSpacing: "0.22em",
             marginBottom: "4px",
           }}>{label}</div>
           <div style={{
             fontFamily: "var(--font-mono)",
             fontSize: "0.85rem",
-            color: "var(--text)",
+            color: "#c8a878",
             letterSpacing: "0.06em",
           }}>{value}</div>
         </div>
       ))}
+
       {roll.description && (
         <p style={{
           fontFamily: "var(--font-mono)",
-          fontSize: "0.75rem",
-          color: "var(--text-muted)",
+          fontSize: "0.72rem",
+          color: "#8a6040",
           lineHeight: 1.75,
           letterSpacing: "0.04em",
-          borderLeft: "1px solid var(--amber-dim)",
+          borderLeft: "2px solid #5a3018",
           paddingLeft: "10px",
           margin: 0,
         }}>{roll.description}</p>
       )}
+
       <div style={{
         fontFamily: "var(--font-mono)",
-        fontSize: "0.68rem",
+        fontSize: "0.7rem",
         color: "var(--amber)",
         letterSpacing: "0.15em",
         textShadow: "0 0 6px var(--amber)",
@@ -174,15 +127,19 @@ function MetadataPanel({ roll }: { roll: FilmRoll }) {
 }
 
 // ── Single film frame ─────────────────────────────────────────────────────────
-interface FrameProps {
+function FilmFrame({
+  photo,
+  index,
+  revealed,
+  onOpen,
+  didMoveRef,
+}: {
   photo: Photo;
   index: number;
   revealed: boolean;
   onOpen: () => void;
   didMoveRef: React.RefObject<boolean>;
-}
-
-function FilmFrame({ photo, index, revealed, onOpen, didMoveRef }: FrameProps) {
+}) {
   return (
     <div
       data-frame={index}
@@ -194,11 +151,12 @@ function FilmFrame({ photo, index, revealed, onOpen, didMoveRef }: FrameProps) {
         flexShrink: 0,
         position: "relative",
         overflow: "hidden",
-        borderLeft: "2px solid #0d0603",
-        borderRight: "2px solid #0d0603",
+        // Film frame border uses the strip dark brown
+        borderLeft: "3px solid #2d1a0d",
+        borderRight: "3px solid #2d1a0d",
         clipPath: revealed ? "inset(0 0% 0 0)" : "inset(0 100% 0 0)",
         opacity: revealed ? 1 : 0,
-        transition: `clip-path 0.7s ease-out ${index * 0.04}s, opacity 0.5s ease-out ${index * 0.04}s`,
+        transition: `clip-path 0.65s cubic-bezier(0.22,1,0.36,1) ${index * 0.03}s, opacity 0.4s ease ${index * 0.03}s`,
       }}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -209,27 +167,26 @@ function FilmFrame({ photo, index, revealed, onOpen, didMoveRef }: FrameProps) {
           width: "100%",
           height: "100%",
           objectFit: "cover",
-          filter: "brightness(0.87) sepia(0.06)",
+          filter: "brightness(0.87) sepia(0.05)",
           transition: "filter 0.3s ease",
           display: "block",
         }}
       />
 
-      {/* Frame number — always visible, bolder on hover via CSS class */}
+      {/* Frame number badge */}
       <div
         className="frame-num"
         style={{
           position: "absolute",
           bottom: "8px",
-          left: "10px",
+          left: "8px",
           fontFamily: "var(--font-mono)",
           fontSize: "0.75rem",
-          color: "var(--amber)",
+          color: "#c8b48a",
           letterSpacing: "0.12em",
-          textShadow: "0 0 6px var(--amber)",
-          background: "rgba(4,2,1,0.7)",
-          padding: "2px 6px",
-          opacity: 0.6,
+          background: "rgba(12,5,2,0.75)",
+          padding: "2px 7px",
+          opacity: 0.55,
           transition: "opacity 0.2s",
         }}
       >
@@ -316,14 +273,12 @@ function Lightbox({
         />
       </div>
 
-      {/* Caption */}
       {photos[index].caption && (
         <div style={{ textAlign: "center", padding: "0 2rem 1.5rem", fontFamily: "var(--font-mono)", fontSize: "0.82rem", color: "var(--text-muted)", letterSpacing: "0.08em" }}>
           {photos[index].caption}
         </div>
       )}
 
-      {/* Prev / Next */}
       {index > 0 && (
         <button
           className="glow"
@@ -374,7 +329,7 @@ export default function FilmStrip({ roll }: { roll: FilmRoll }) {
     return () => el.removeEventListener("wheel", onWheel);
   }, []);
 
-  // Drag-to-scroll (mouse)
+  // Drag-to-scroll
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     didMoveRef.current = false;
     dragRef.current = { active: true, startX: e.clientX, startScroll: stripRef.current!.scrollLeft };
@@ -405,7 +360,7 @@ export default function FilmStrip({ roll }: { roll: FilmRoll }) {
           }
         });
       },
-      { root: el, rootMargin: "0px 120px 0px 0px", threshold: 0.05 }
+      { root: el, rootMargin: "0px 150px 0px 0px", threshold: 0.05 }
     );
     frames.forEach((f) => obs.observe(f));
     return () => obs.disconnect();
@@ -418,7 +373,6 @@ export default function FilmStrip({ roll }: { roll: FilmRoll }) {
 
   return (
     <>
-      {/* ── Horizontal scroll strip ── */}
       <div
         ref={stripRef}
         className="film-strip-scroll"
@@ -436,52 +390,47 @@ export default function FilmStrip({ roll }: { roll: FilmRoll }) {
           touchAction: "pan-x",
         }}
       >
-        {/* Film strip: column flex inside the scroll container */}
+        {/* Film strip inner (column flex, width: max-content so it extends as far as needed) */}
         <div style={{
           display: "flex",
           flexDirection: "column",
           width: "max-content",
           minWidth: "100%",
           height: "100%",
-          background: "#060402",
         }}>
           {/* Top sprocket track */}
           <div style={sprocketTrack} />
 
-          {/* Main film content */}
+          {/* Film body */}
           <div style={{
             flex: 1,
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
-            background: "#080503",
-            gap: 0,
-            padding: "0",
+            background: STRIP_BG,
           }}>
-            {/* Canister */}
-            <Canister filmStock={roll.filmStock} rollNumber={roll.rollNumber} />
+            {/* Pixel-art canister */}
+            <Canister />
 
-            {/* Leader strip (blank film before first frame) */}
+            {/* Leader strip — blank dark film before first content */}
             <div style={{
-              width: "80px",
+              width: "60px",
               flexShrink: 0,
               alignSelf: "stretch",
-              background: "#060301",
-              borderLeft: "1px solid #140803",
+              background: STRIP_BG,
+              borderRight: "2px solid #2d1a0d",
             }} />
 
             {/* Metadata panel */}
             <MetadataPanel roll={roll} />
 
-            {/* Gap between metadata and first frame */}
-            <div style={{ width: "6px", flexShrink: 0, alignSelf: "stretch", background: "#070402", borderLeft: "1px solid #140803" }} />
+            {/* Thin gap before frames */}
+            <div style={{ width: "8px", flexShrink: 0, alignSelf: "stretch", background: STRIP_BG, borderLeft: "2px solid #2d1a0d" }} />
 
             {/* Frames */}
             {roll.photos.length === 0 ? (
               <div style={{ display: "flex", alignItems: "center", padding: "0 60px", gap: "16px" }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/film-icon.png" alt="" style={{ width: "48px", opacity: 0.15, filter: "sepia(0.5)" }} />
-                <span style={{ color: "var(--text-dim)", fontFamily: "var(--font-mono)", fontSize: "0.85rem", letterSpacing: "0.18em" }}>
+                <span style={{ color: "#6a4830", fontFamily: "var(--font-mono)", fontSize: "0.85rem", letterSpacing: "0.18em" }}>
                   NO FRAMES EXPOSED
                 </span>
               </div>
@@ -499,7 +448,7 @@ export default function FilmStrip({ roll }: { roll: FilmRoll }) {
             )}
 
             {/* Trailing blank strip */}
-            <div style={{ width: "50vw", flexShrink: 0, alignSelf: "stretch", background: "#060301" }} />
+            <div style={{ width: "50vw", flexShrink: 0, alignSelf: "stretch", background: STRIP_BG }} />
           </div>
 
           {/* Bottom sprocket track */}
@@ -507,7 +456,6 @@ export default function FilmStrip({ roll }: { roll: FilmRoll }) {
         </div>
       </div>
 
-      {/* Lightbox */}
       {lightbox !== null && (
         <Lightbox
           photos={roll.photos}
