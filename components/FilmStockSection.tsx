@@ -33,7 +33,7 @@ export default function FilmStockSection({ group }: FilmStockSectionProps) {
                 src="/film-icon.png"
                 alt="film roll"
                 className="w-4/5 object-contain"
-                style={{ filter: "grayscale(1) brightness(0.9)" }}
+                style={{ filter: "none" }}
               />
             </div>
 
