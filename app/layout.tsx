@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { VT323, Space_Mono } from "next/font/google";
+import { DM_Sans, Space_Mono } from "next/font/google";
 import "./globals.css";
 
-const vt323 = VT323({
+const dmSans = DM_Sans({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["300", "400", "500"],
 });
 
 const spaceMono = Space_Mono({
@@ -15,8 +15,8 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "[ FILMEE ]",
-  description: "feel me",
+  title: "filmee",
+  description: "personal film archive",
 };
 
 export default function RootLayout({
@@ -25,16 +25,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh" className={`${vt323.variable} ${spaceMono.variable} h-full`}>
-      <body className="min-h-full flex flex-col">
-        {/* Pure CSS CRT background */}
-        <div className="crt-bg" />
-        {/* Global overlays */}
-        <div className="vignette" />
-        {/* Content */}
-        <div className="relative z-10 min-h-full flex flex-col">
-          {children}
-        </div>
+    <html lang="zh" className={`${dmSans.variable} ${spaceMono.variable} h-full`}>
+      <body className="min-h-full flex flex-col bg-white text-[#111111]">
+        {children}
       </body>
     </html>
   );

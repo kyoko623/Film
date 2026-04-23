@@ -40,9 +40,9 @@ function LoginForm({ onLogin }: { onLogin: (token: string) => void }) {
   }
 
   return (
-    <div className="min-h-screen bg-stone-950 flex items-center justify-center">
+    <div className="min-h-screen bg-white flex items-center justify-center">
       <form onSubmit={handleSubmit} className="w-72">
-        <h1 className="text-stone-300 text-xl font-light tracking-widest uppercase mb-8 text-center">
+        <h1 className="text-gray-400 text-xl font-light tracking-widest uppercase mb-8 text-center">
           Admin
         </h1>
         <input
@@ -50,14 +50,14 @@ function LoginForm({ onLogin }: { onLogin: (token: string) => void }) {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="密码"
-          className="w-full bg-stone-800 text-stone-100 px-4 py-3 text-sm outline-none mb-3 placeholder:text-stone-600"
+          className="w-full bg-gray-50 text-gray-900 border border-gray-200 px-4 py-3 text-sm outline-none mb-3 placeholder:text-gray-400"
           autoFocus
         />
-        {error && <p className="text-red-400 text-xs mb-3">{error}</p>}
+        {error && <p className="text-red-500 text-xs mb-3">{error}</p>}
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-stone-700 hover:bg-stone-600 text-stone-100 py-3 text-sm tracking-widest uppercase transition-colors disabled:opacity-50"
+          className="w-full bg-gray-900 hover:bg-gray-700 text-white py-3 text-sm tracking-widest uppercase transition-colors disabled:opacity-50"
         >
           {loading ? "验证中…" : "进入"}
         </button>
@@ -109,11 +109,11 @@ function CreateRollForm({ token, onCreated }: { token: string; onCreated: (roll:
   }
 
   const inputClass =
-    "bg-stone-800 text-stone-100 px-3 py-2 text-sm outline-none w-full placeholder:text-stone-600";
+    "bg-white text-gray-900 border border-gray-200 px-3 py-2 text-sm outline-none w-full placeholder:text-gray-400";
 
   return (
-    <form onSubmit={handleSubmit} className="bg-stone-900 p-6 mb-10">
-      <h2 className="text-stone-400 text-xs tracking-widest uppercase mb-4">新建胶卷</h2>
+    <form onSubmit={handleSubmit} className="bg-gray-50 border border-gray-200 p-6 mb-10">
+      <h2 className="text-gray-400 text-xs tracking-widest uppercase mb-4">新建胶卷</h2>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-3">
         <input className={inputClass} placeholder="胶卷型号 *" value={form.filmStock} onChange={(e) => set("filmStock", e.target.value)} required />
         <input className={inputClass} placeholder="卷号 *" type="number" value={form.rollNumber} onChange={(e) => set("rollNumber", e.target.value)} required />
@@ -125,11 +125,11 @@ function CreateRollForm({ token, onCreated }: { token: string; onCreated: (roll:
       <button
         type="submit"
         disabled={loading}
-        className="bg-stone-700 hover:bg-stone-600 text-stone-100 px-6 py-2 text-sm tracking-wider uppercase transition-colors disabled:opacity-50"
+        className="bg-gray-900 hover:bg-gray-700 text-white px-6 py-2 text-sm tracking-wider uppercase transition-colors disabled:opacity-50"
       >
-          {loading ? "创建中…" : "创建"}
+        {loading ? "创建中…" : "创建"}
       </button>
-      {error && <p className="text-red-400 text-xs mt-3">{error}</p>}
+      {error && <p className="text-red-500 text-xs mt-3">{error}</p>}
     </form>
   );
 }
@@ -180,19 +180,19 @@ function RollCard({ roll, token, onDeleted, onUpdated }: {
   }
 
   return (
-    <div className="bg-stone-900 p-5 mb-4">
+    <div className="border border-gray-200 p-5 mb-4 bg-white">
       <div className="flex items-start justify-between mb-4">
         <div>
-          <p className="text-stone-500 text-xs tracking-widest uppercase">{roll.filmStock}</p>
-          <p className="text-stone-200 font-medium">Roll #{roll.rollNumber}</p>
-          <p className="text-stone-500 text-xs mt-0.5">
+          <p className="text-gray-400 text-xs tracking-widest uppercase">{roll.filmStock}</p>
+          <p className="text-gray-900 font-medium">Roll #{roll.rollNumber}</p>
+          <p className="text-gray-400 text-xs mt-0.5">
             {[roll.date, roll.location, roll.camera].filter(Boolean).join(" · ")}
           </p>
         </div>
         <button
           onClick={handleDeleteRoll}
           disabled={deleting}
-          className="text-stone-600 hover:text-red-400 text-xs tracking-wider transition-colors disabled:opacity-50"
+          className="text-gray-400 hover:text-red-500 text-xs tracking-wider transition-colors disabled:opacity-50"
         >
           {deleting ? "删除中…" : "删除整卷"}
         </button>
@@ -207,7 +207,7 @@ function RollCard({ roll, token, onDeleted, onUpdated }: {
               <img src={photo.filename} alt="" className="w-full h-full object-cover" />
               <button
                 onClick={() => handleDeletePhoto(photo.id)}
-                className="absolute inset-0 bg-black/60 text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+                className="absolute inset-0 bg-black/50 text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
               >
                 ✕
               </button>
@@ -223,12 +223,12 @@ function RollCard({ roll, token, onDeleted, onUpdated }: {
           type="file"
           multiple
           accept="image/jpeg,image/png,image/webp"
-          className="text-stone-500 text-xs file:mr-3 file:bg-stone-700 file:text-stone-200 file:border-0 file:px-3 file:py-1.5 file:text-xs file:cursor-pointer"
+          className="text-gray-500 text-xs file:mr-3 file:bg-gray-900 file:text-white file:border-0 file:px-3 file:py-1.5 file:text-xs file:cursor-pointer"
         />
         <button
           onClick={handleUpload}
           disabled={uploading}
-          className="bg-stone-700 hover:bg-stone-600 text-stone-200 px-4 py-1.5 text-xs tracking-wider uppercase transition-colors disabled:opacity-50 whitespace-nowrap"
+          className="bg-gray-900 hover:bg-gray-700 text-white px-4 py-1.5 text-xs tracking-wider uppercase transition-colors disabled:opacity-50 whitespace-nowrap"
         >
           {uploading ? "上传中…" : "上传照片"}
         </button>
@@ -271,17 +271,17 @@ export default function AdminPage() {
   );
 
   return (
-    <main className="min-h-screen bg-stone-950 text-stone-100">
+    <main className="min-h-screen bg-white text-gray-900">
       <div className="max-w-3xl mx-auto px-6 py-16">
         <div className="flex items-center justify-between mb-12">
-          <h1 className="text-2xl font-light tracking-widest uppercase">Admin</h1>
+          <h1 className="text-2xl font-light tracking-widest uppercase text-gray-900">Admin</h1>
           <div className="flex gap-4">
-            <a href="/" className="text-stone-500 hover:text-stone-300 text-xs tracking-wider uppercase transition-colors">
+            <a href="/" className="text-gray-400 hover:text-gray-700 text-xs tracking-wider uppercase transition-colors">
               ← 主页
             </a>
             <button
               onClick={handleLogout}
-              className="text-stone-500 hover:text-stone-300 text-xs tracking-wider uppercase transition-colors"
+              className="text-gray-400 hover:text-gray-700 text-xs tracking-wider uppercase transition-colors"
             >
               退出
             </button>
@@ -291,11 +291,11 @@ export default function AdminPage() {
         <CreateRollForm token={token} onCreated={(roll) => setRolls((prev) => [...prev, roll])} />
 
         <div>
-          <h2 className="text-stone-400 text-xs tracking-widest uppercase mb-4">
+          <h2 className="text-gray-400 text-xs tracking-widest uppercase mb-4">
             所有胶卷 ({rolls.length})
           </h2>
           {sortedRolls.length === 0 ? (
-            <p className="text-stone-600 text-sm">还没有胶卷，先创建一卷吧。</p>
+            <p className="text-gray-400 text-sm">还没有胶卷，先创建一卷吧。</p>
           ) : (
             sortedRolls.map((roll) => (
               <RollCard
