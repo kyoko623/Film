@@ -3,18 +3,40 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import type { FilmRoll, Photo } from "@/types";
 
-// ── Sprocket holes: cream/warm-white on dark-brown (matches pixel art reference) ──
-const SPROCKET_SVG = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='28'%3E%3Crect x='7' y='4' width='18' height='20' rx='2' fill='%23c8b48a'/%3E%3C/svg%3E")`;
+// ── Sprocket tracks: mask punches real holes, glow layer adds amber light-leak ──
+// Mask SVG: white = keep material, black = punch hole
+const TRACK_MASK = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='30'%3E%3Crect width='32' height='30' fill='white'/%3E%3Crect x='7' y='5' width='18' height='20' rx='2' fill='black'/%3E%3C/svg%3E")`;
+// Glow SVG: amber rectangle at each hole position — blurred to simulate backlit glow
+const TRACK_GLOW = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='30'%3E%3Crect x='7' y='5' width='18' height='20' rx='2' fill='%23c86418' fill-opacity='0.45'/%3E%3C/svg%3E")`;
 
-const sprocketTrack: React.CSSProperties = {
-  height: "30px",
-  flexShrink: 0,
-  backgroundColor: "#2d1a0d",
-  backgroundImage: SPROCKET_SVG,
-  backgroundRepeat: "repeat-x",
-  backgroundSize: "32px 30px",
-  backgroundPosition: "left center",
-};
+function SprocketTrack() {
+  return (
+    <div style={{ height: "30px", flexShrink: 0, position: "relative", alignSelf: "stretch" }}>
+      {/* Dark brown film material with transparent punched holes */}
+      <div style={{
+        position: "absolute",
+        inset: 0,
+        backgroundColor: "#2d1a0d",
+        WebkitMaskImage: TRACK_MASK,
+        WebkitMaskRepeat: "repeat-x",
+        WebkitMaskSize: "32px 30px",
+        maskImage: TRACK_MASK,
+        maskRepeat: "repeat-x",
+        maskSize: "32px 30px",
+      }} />
+      {/* Amber light-leak glow through each hole */}
+      <div style={{
+        position: "absolute",
+        inset: 0,
+        backgroundImage: TRACK_GLOW,
+        backgroundRepeat: "repeat-x",
+        backgroundSize: "32px 30px",
+        filter: "blur(3px)",
+        pointerEvents: "none",
+      }} />
+    </div>
+  );
+}
 
 // Strip body color — dark warm brown matching the pixel art film strip
 const STRIP_BG = "#1c0e06";
@@ -399,7 +421,7 @@ export default function FilmStrip({ roll }: { roll: FilmRoll }) {
           height: "100%",
         }}>
           {/* Top sprocket track */}
-          <div style={sprocketTrack} />
+          <SprocketTrack />
 
           {/* Film body */}
           <div style={{
@@ -452,7 +474,7 @@ export default function FilmStrip({ roll }: { roll: FilmRoll }) {
           </div>
 
           {/* Bottom sprocket track */}
-          <div style={sprocketTrack} />
+          <SprocketTrack />
         </div>
       </div>
 
