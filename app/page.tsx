@@ -1,7 +1,17 @@
 import { getGroupedByFilmStock } from "@/lib/data";
-import ArchiveView from "@/components/ArchiveView";
+import FilmStockSection from "@/components/FilmStockSection";
 
 export const dynamic = "force-dynamic";
+
+function Sprockets({ count = 28 }: { count?: number }) {
+  return (
+    <div className="sprocket-strip my-8">
+      {Array.from({ length: count }).map((_, i) => (
+        <div key={i} className="sprocket-hole" />
+      ))}
+    </div>
+  );
+}
 
 export default async function HomePage() {
   const groups = await getGroupedByFilmStock();
@@ -17,7 +27,7 @@ export default async function HomePage() {
       {/* ── Hero title ── */}
       <div className="flex flex-col justify-end px-8 md:px-14" style={{ minHeight: "100svh", paddingBottom: "5rem" }}>
         <h1
-          className="font-display glow chromatic title-crt flicker leading-none mb-3"
+          className="font-display glow title-crt leading-none mb-3"
           style={{ fontSize: "clamp(5rem, 16vw, 12rem)", color: "var(--text)", letterSpacing: "0.04em" }}
         >
           FILM<span style={{ color: "var(--amber)" }}>EE</span>
@@ -53,9 +63,23 @@ export default async function HomePage() {
 
       {/* ── Archive ── */}
       <div
-        style={{ background: "linear-gradient(to bottom, transparent 0%, rgba(5,4,8,0.93) 6%, rgba(5,4,8,0.97) 100%)" }}
+        style={{ background: "linear-gradient(to bottom, transparent 0%, rgba(8,6,4,0.92) 6%, rgba(8,6,4,0.96) 100%)" }}
       >
-        <ArchiveView groups={groups} />
+        <div className="max-w-6xl mx-auto px-6 pt-4 pb-28">
+          <Sprockets count={32} />
+          {groups.length === 0 ? (
+            <p style={{ color: "var(--text-dim)", fontSize: "1rem", letterSpacing: "0.15em" }}>
+              NO ROLLS YET — OPEN /ADMIN TO BEGIN
+            </p>
+          ) : (
+            groups.map((group, i) => (
+              <div key={group.filmStock}>
+                <FilmStockSection group={group} />
+                {i < groups.length - 1 && <Sprockets count={32} />}
+              </div>
+            ))
+          )}
+        </div>
       </div>
     </main>
   );
