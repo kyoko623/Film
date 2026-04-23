@@ -203,7 +203,7 @@ export default function NewRollButton() {
                         onClick={() => set("filmStock", opt.value)}
                         style={{
                           border: form.filmStock === opt.value ? "2px solid #111" : "1.5px solid var(--border-soft)",
-                          background: form.filmStock === opt.value ? "rgba(0,0,0,0.05)" : "#fff",
+                          background: form.filmStock === opt.value ? "rgba(0,0,0,0.05)" : "transparent",
                           padding: "0.8rem 1rem",
                           cursor: "pointer",
                           display: "flex",
