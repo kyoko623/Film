@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getGroupedByFilmStock } from "@/lib/data";
 import NewRollButton from "@/components/NewRollButton";
+import UploadToRoll from "@/components/UploadToRoll";
 import type { FilmRoll } from "@/types";
 
 export const dynamic = "force-dynamic";
@@ -11,6 +12,7 @@ function filmIcon(filmStock: string): string {
 
 function RollCard({ roll }: { roll: FilmRoll }) {
   return (
+    <div>
     <Link href={`/roll/${roll.id}`} className="roll-card block">
       {/* Icon container — fixed height so both icons appear the same size */}
       <div style={{ height: "140px", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "0.75rem" }}>
@@ -37,6 +39,8 @@ function RollCard({ roll }: { roll: FilmRoll }) {
         <div style={{ color: "var(--text-dim)" }}>{roll.date}</div>
       </div>
     </Link>
+    <UploadToRoll rollId={roll.id} />
+    </div>
   );
 }
 
