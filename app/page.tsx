@@ -15,7 +15,7 @@ function RollCard({ roll }: { roll: FilmRoll }) {
   return (
     <div className="roll-card" style={{ cursor: "pointer" }}>
       <Link href={`/roll/${roll.id}`} style={{ display: "block", textDecoration: "none" }}>
-        {/* Icon: fixed width, natural height, bottom-aligned so all canisters sit on same baseline */}
+        {/* Icon: fixed height, natural width — both canisters same height */}
         <div style={{
           height: "170px",
           display: "flex",
@@ -28,7 +28,7 @@ function RollCard({ roll }: { roll: FilmRoll }) {
             src={filmIcon(roll.filmStock)}
             alt=""
             className="roll-card-icon"
-            style={{ width: "80px", height: "auto" }}
+            style={{ height: "150px", width: "auto" }}
           />
         </div>
 
