@@ -3,7 +3,7 @@ import type { FilmStockGroup } from "@/types";
 
 function filmIcon(filmStock: string): string {
   const s = filmStock.toLowerCase();
-  if (s.includes("fuji")) return "/fuji-icon.svg";
+  if (s.includes("fuji")) return "/fuji-icon.png";
   return "/film-icon.png";
 }
 

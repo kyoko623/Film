@@ -195,7 +195,7 @@ export default function NewRollButton() {
                   <div style={{ display: "flex", gap: "0.75rem" }}>
                     {([
                       { value: "Kodak Gold 200", icon: "/film-icon.png", label: "KODAK GOLD 200" },
-                      { value: "Fuji 200",       icon: "/fuji-icon.svg",  label: "FUJI 200" },
+                      { value: "Fuji 200",       icon: "/fuji-icon.png",  label: "FUJI 200" },
                     ] as const).map(opt => (
                       <button
                         key={opt.value}
