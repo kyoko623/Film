@@ -13,7 +13,7 @@ function RollCard({ roll }: { roll: FilmRoll }) {
   return (
     <Link href={`/roll/${roll.id}`} className="roll-card block">
       {/* Icon container — fixed height so both icons appear the same size */}
-      <div style={{ height: "140px", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "0.75rem", overflow: "hidden" }}>
+      <div style={{ height: "140px", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "0.75rem" }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={filmIcon(roll.filmStock)}
