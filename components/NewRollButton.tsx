@@ -1,32 +1,35 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 
 const STORAGE_KEY = "adminToken";
 
 const inputStyle: React.CSSProperties = {
   width: "100%",
-  border: "1px solid #e8e8e8",
+  border: "1.5px solid #111",
   background: "#fff",
-  padding: "0.6rem 0.8rem",
+  padding: "0.65rem 0.9rem",
   fontFamily: "var(--font-mono)",
   fontSize: "0.82rem",
   color: "#111",
   outline: "none",
+  borderRadius: 0,
 };
 
 const labelStyle: React.CSSProperties = {
   fontFamily: "var(--font-mono)",
-  fontSize: "0.6rem",
-  letterSpacing: "0.18em",
-  color: "#aaa",
-  marginBottom: "4px",
+  fontSize: "0.58rem",
+  letterSpacing: "0.2em",
+  color: "var(--text-muted)",
+  marginBottom: "5px",
   display: "block",
+  textTransform: "uppercase",
 };
 
 export default function NewRollButton() {
   const router = useRouter();
+  const panelRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const [token, setToken] = useState<string | null>(null);
   const [password, setPassword] = useState("");
@@ -38,10 +41,23 @@ export default function NewRollButton() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  // Load token from localStorage (persists across sessions)
   useEffect(() => {
-    const saved = sessionStorage.getItem(STORAGE_KEY);
+    const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) setToken(saved);
   }, []);
+
+  // Close on outside click
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: MouseEvent) => {
+      if (panelRef.current && !panelRef.current.contains(e.target as Node)) {
+        close();
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [open]);
 
   function close() {
     setOpen(false);
@@ -57,7 +73,7 @@ export default function NewRollButton() {
     setAuthError("");
     const res = await fetch("/api/rolls", { headers: { Authorization: `Bearer ${password}` } });
     if (res.ok) {
-      sessionStorage.setItem(STORAGE_KEY, password);
+      localStorage.setItem(STORAGE_KEY, password);
       setToken(password);
     } else {
       setAuthError("密码错误");
@@ -80,6 +96,11 @@ export default function NewRollButton() {
         close();
         router.refresh();
       } else {
+        // Token expired or invalid — clear and ask again
+        if (res.status === 401) {
+          localStorage.removeItem(STORAGE_KEY);
+          setToken(null);
+        }
         const data = await res.json().catch(() => ({}));
         setError(data.error ?? `错误 ${res.status}`);
       }
@@ -89,126 +110,136 @@ export default function NewRollButton() {
     setLoading(false);
   }
 
+  function set(key: string, value: string) {
+    setForm((f) => ({ ...f, [key]: value }));
+  }
+
   return (
     <>
+      {/* Trigger button */}
       <button
-        onClick={() => setOpen(true)}
+        onClick={() => setOpen((v) => !v)}
         style={{
           fontFamily: "var(--font-mono)",
-          fontSize: "0.75rem",
+          fontSize: "0.72rem",
           letterSpacing: "0.14em",
-          color: "#111",
-          border: "1px solid #e8e8e8",
-          background: "#fff",
-          padding: "0.35rem 0.85rem",
+          color: open ? "#fff" : "#111",
+          border: "1.5px solid #111",
+          background: open ? "#111" : "transparent",
+          padding: "0.3rem 0.9rem",
           cursor: "pointer",
-          transition: "border-color 0.15s, background 0.15s",
+          transition: "background 0.15s, color 0.15s",
         }}
-        onMouseEnter={e => { (e.target as HTMLElement).style.background = "#f7f7f7"; }}
-        onMouseLeave={e => { (e.target as HTMLElement).style.background = "#fff"; }}
       >
-        + NEW ROLL
+        {open ? "✕ CLOSE" : "+ NEW ROLL"}
       </button>
 
+      {/* Top-anchored drop-down panel */}
       {open && (
         <div
+          ref={panelRef}
+          className="panel-enter"
           style={{
-            position: "fixed", inset: 0, zIndex: 9999,
-            background: "rgba(255,255,255,0.88)",
-            backdropFilter: "blur(6px)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            padding: "1.5rem",
+            position: "fixed",
+            top: "52px",
+            left: 0,
+            right: 0,
+            zIndex: 99,
+            background: "var(--bg)",
+            borderBottom: "1.5px solid #111",
+            boxShadow: "0 8px 32px rgba(0,0,0,0.08)",
           }}
-          onClick={close}
         >
-          <div
-            style={{
-              background: "#fff",
-              border: "1px solid #e8e8e8",
-              padding: "2.2rem",
-              width: "100%",
-              maxWidth: "440px",
-            }}
-            onClick={e => e.stopPropagation()}
-          >
-            {/* Header */}
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.8rem" }}>
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.65rem", letterSpacing: "0.2em", color: "#aaa" }}>
-                NEW ROLL
-              </span>
-              <button onClick={close} style={{ background: "none", border: "none", cursor: "pointer", color: "#aaa", fontSize: "1rem" }}>✕</button>
-            </div>
-
-            {/* Auth step */}
+          <div style={{ maxWidth: "880px", margin: "0 auto", padding: "2rem 2rem" }}>
             {!token ? (
-              <form onSubmit={handleAuth}>
-                <label style={labelStyle}>ADMIN PASSWORD</label>
+              /* ── Password step ── */
+              <form onSubmit={handleAuth} style={{ maxWidth: "320px" }}>
+                <p style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", fontWeight: 700, marginBottom: "1.2rem" }}>
+                  管理员验证
+                </p>
+                <label style={labelStyle}>密码</label>
                 <input
                   type="password"
                   value={password}
                   onChange={e => setPassword(e.target.value)}
                   style={inputStyle}
                   autoFocus
-                  placeholder="请输入密码"
+                  placeholder="输入密码"
                 />
-                {authError && <p style={{ color: "#e00", fontFamily: "var(--font-mono)", fontSize: "0.72rem", marginTop: "8px" }}>{authError}</p>}
+                {authError && (
+                  <p style={{ color: "#c00", fontFamily: "var(--font-mono)", fontSize: "0.72rem", marginTop: "8px" }}>{authError}</p>
+                )}
                 <button
                   type="submit"
                   disabled={authLoading}
                   style={{
                     marginTop: "1rem", width: "100%",
-                    background: "#111", color: "#fff",
-                    border: "none", padding: "0.7rem",
-                    fontFamily: "var(--font-mono)", fontSize: "0.75rem",
+                    background: "#111", color: "#fff", border: "none",
+                    padding: "0.7rem",
+                    fontFamily: "var(--font-mono)", fontSize: "0.72rem",
                     letterSpacing: "0.15em", cursor: "pointer",
                     opacity: authLoading ? 0.5 : 1,
                   }}
                 >
                   {authLoading ? "验证中…" : "进入"}
                 </button>
+                <p style={{ marginTop: "0.6rem", fontFamily: "var(--font-mono)", fontSize: "0.62rem", color: "var(--text-dim)" }}>
+                  密码已记住，下次无需再输
+                </p>
               </form>
             ) : (
-              /* Create roll form */
-              <form onSubmit={handleCreate} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
+              /* ── Create roll form ── */
+              <form onSubmit={handleCreate}>
+                <div style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))",
+                  gap: "1rem",
+                  marginBottom: "1.2rem",
+                }}>
                   <div>
                     <label style={labelStyle}>胶卷型号 *</label>
-                    <input style={inputStyle} value={form.filmStock} onChange={e => setForm(f => ({ ...f, filmStock: e.target.value }))} required placeholder="Kodak Gold 200" />
+                    <input style={inputStyle} value={form.filmStock} onChange={e => set("filmStock", e.target.value)} required placeholder="Kodak Gold 200" />
                   </div>
                   <div>
                     <label style={labelStyle}>卷号 *</label>
-                    <input style={inputStyle} type="number" value={form.rollNumber} onChange={e => setForm(f => ({ ...f, rollNumber: e.target.value }))} required placeholder="1" />
+                    <input style={inputStyle} type="number" value={form.rollNumber} onChange={e => set("rollNumber", e.target.value)} required placeholder="1" />
                   </div>
                   <div>
                     <label style={labelStyle}>日期</label>
-                    <input style={inputStyle} type="date" value={form.date} onChange={e => setForm(f => ({ ...f, date: e.target.value }))} />
+                    <input style={inputStyle} type="date" value={form.date} onChange={e => set("date", e.target.value)} />
                   </div>
                   <div>
                     <label style={labelStyle}>地点</label>
-                    <input style={inputStyle} value={form.location} onChange={e => setForm(f => ({ ...f, location: e.target.value }))} placeholder="Tokyo" />
+                    <input style={inputStyle} value={form.location} onChange={e => set("location", e.target.value)} placeholder="Tokyo" />
                   </div>
                   <div>
                     <label style={labelStyle}>相机</label>
-                    <input style={inputStyle} value={form.camera} onChange={e => setForm(f => ({ ...f, camera: e.target.value }))} placeholder="Contax T2" />
+                    <input style={inputStyle} value={form.camera} onChange={e => set("camera", e.target.value)} placeholder="Contax T2" />
                   </div>
                   <div>
                     <label style={labelStyle}>备注</label>
-                    <input style={inputStyle} value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} placeholder="…" />
+                    <input style={inputStyle} value={form.description} onChange={e => set("description", e.target.value)} placeholder="…" />
                   </div>
                 </div>
-                {error && <p style={{ color: "#e00", fontFamily: "var(--font-mono)", fontSize: "0.72rem" }}>{error}</p>}
-                <button
-                  type="submit"
-                  disabled={loading}
-                  style={{
-                    background: "#111", color: "#fff", border: "none",
-                    padding: "0.7rem", fontFamily: "var(--font-mono)",
-                    fontSize: "0.75rem", letterSpacing: "0.15em",
-                    cursor: "pointer", opacity: loading ? 0.5 : 1,
-                  }}
-                >
-                  {loading ? "创建中…" : "CREATE ROLL"}
-                </button>
+
+                <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    style={{
+                      background: "#111", color: "#fff", border: "none",
+                      padding: "0.65rem 2rem",
+                      fontFamily: "var(--font-mono)", fontSize: "0.72rem",
+                      letterSpacing: "0.15em", cursor: "pointer",
+                      opacity: loading ? 0.5 : 1,
+                    }}
+                  >
+                    {loading ? "创建中…" : "CREATE ROLL"}
+                  </button>
+                  {error && (
+                    <span style={{ color: "#c00", fontFamily: "var(--font-mono)", fontSize: "0.72rem" }}>{error}</span>
+                  )}
+                </div>
               </form>
             )}
           </div>

@@ -20,9 +20,8 @@ export default async function HomePage() {
         height: "52px",
         display: "flex", alignItems: "center", justifyContent: "space-between",
         padding: "0 2rem",
-        background: "rgba(255,255,255,0.92)",
-        backdropFilter: "blur(8px)",
-        borderBottom: "1px solid var(--border)",
+        background: "var(--bg)",
+        borderBottom: "1.5px solid var(--border)",
       }}>
         <span style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", fontWeight: 300, letterSpacing: "-0.01em", color: "var(--text)" }}>
           FILMEE
@@ -33,11 +32,11 @@ export default async function HomePage() {
       {/* ── Hero ── */}
       <div
         className="relative flex flex-col justify-end px-8 md:px-14"
-        style={{ minHeight: "100svh", paddingBottom: "5rem", borderBottom: "1px solid var(--border)" }}
+        style={{ minHeight: "100svh", paddingBottom: "5rem", borderBottom: "1.5px solid var(--border)" }}
       >
         <h1
           className="font-display leading-none mb-5"
-          style={{ fontSize: "clamp(5rem, 16vw, 13rem)", color: "var(--text)", letterSpacing: "-0.02em", fontWeight: 300 }}
+          style={{ fontSize: "clamp(5rem, 16vw, 13rem)", color: "var(--text)", letterSpacing: "-0.03em", fontWeight: 800 }}
         >
           FILMEE
         </h1>

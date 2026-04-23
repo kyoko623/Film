@@ -22,7 +22,7 @@ function MetadataPanel({ roll }: { roll: FilmRoll }) {
       flexDirection: "column",
       justifyContent: "center",
       gap: "1.5rem",
-      background: "#ffffff",
+      background: "var(--bg)",
     }}>
       <div style={{
         fontFamily: "var(--font-display)",
@@ -173,7 +173,7 @@ function Lightbox({
         position: "fixed",
         inset: 0,
         zIndex: 9990,
-        background: "rgba(255,255,255,0.97)",
+        background: "rgba(240,232,216,0.97)",
         display: "flex",
         flexDirection: "column",
       }}
@@ -336,7 +336,7 @@ export default function FilmStrip({ roll }: { roll: FilmRoll }) {
           touchAction: "pan-x",
           display: "flex",
           flexDirection: "row",
-          background: "#ffffff",
+          background: "var(--bg)",
         }}
       >
         {/* Metadata panel — left anchor */}

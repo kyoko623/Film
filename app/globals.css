@@ -6,12 +6,13 @@
 }
 
 :root {
-  --bg:         #ffffff;
-  --bg-surface: #f7f7f7;
+  --bg:         #f0e8d8;
+  --bg-surface: #e8dfc8;
   --text:       #111111;
-  --text-muted: #666666;
-  --text-dim:   #aaaaaa;
-  --border:     #e8e8e8;
+  --text-muted: #6b5e4e;
+  --text-dim:   #a8907a;
+  --border:     #111111;
+  --border-soft: #d4c8b0;
   --accent:     #111111;
 }
 
@@ -24,6 +25,13 @@ body {
   color: var(--text);
   font-family: var(--font-mono), monospace;
 }
+
+/* ── Form panel slide-down ── */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.panel-enter { animation: slideDown 0.22s ease; }
 
 /* ── Display font ── */
 .font-display {

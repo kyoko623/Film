@@ -8,7 +8,7 @@ interface FilmStockSectionProps {
 export default function FilmStockSection({ group }: FilmStockSectionProps) {
   return (
     <section>
-      <div className="flex items-baseline justify-between mb-6" style={{ borderBottom: "1px solid var(--border)", paddingBottom: "1rem" }}>
+      <div className="flex items-baseline justify-between mb-6" style={{ borderBottom: "1.5px solid var(--border)", paddingBottom: "1rem" }}>
         <h2
           className="font-display"
           style={{ fontSize: "1.5rem", color: "var(--text)", letterSpacing: "-0.01em", fontWeight: 400 }}
