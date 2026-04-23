@@ -1,16 +1,58 @@
+import Link from "next/link";
 import { getGroupedByFilmStock } from "@/lib/data";
-import FilmStockSection from "@/components/FilmStockSection";
 import NewRollButton from "@/components/NewRollButton";
+import type { FilmRoll } from "@/types";
 
 export const dynamic = "force-dynamic";
 
+function filmIcon(filmStock: string): string {
+  return filmStock.toLowerCase().includes("fuji") ? "/fuji-icon.png" : "/film-icon.png";
+}
+
+function RollCard({ roll }: { roll: FilmRoll }) {
+  return (
+    <Link href={`/roll/${roll.id}`} className="roll-card block">
+      {/* Icon container — fixed height so both icons appear the same size */}
+      <div style={{ height: "140px", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "0.75rem", overflow: "hidden" }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={filmIcon(roll.filmStock)}
+          alt={roll.filmStock}
+          className="roll-card-icon"
+          style={{ height: "100%", width: "auto", objectFit: "contain" }}
+        />
+      </div>
+
+      {/* Metadata */}
+      <div style={{ fontSize: "0.75rem", letterSpacing: "0.06em", lineHeight: 1.8, fontFamily: "var(--font-mono)" }}>
+        <div style={{ color: "var(--text-dim)", fontSize: "0.65rem", letterSpacing: "0.1em" }}>
+          {roll.filmStock.toUpperCase()}
+        </div>
+        <div style={{ color: "var(--text)", fontWeight: 700 }}>
+          ROLL #{roll.rollNumber}
+        </div>
+        {roll.location && (
+          <div className="truncate" style={{ color: "var(--text-muted)" }}>{roll.location}</div>
+        )}
+        <div style={{ color: "var(--text-dim)" }}>{roll.date}</div>
+      </div>
+    </Link>
+  );
+}
+
 export default async function HomePage() {
   const groups = await getGroupedByFilmStock();
-  const totalRolls = groups.reduce((acc, g) => acc + g.rolls.length, 0);
-  const totalPhotos = groups.reduce(
-    (acc, g) => acc + g.rolls.reduce((a, r) => a + r.photos.length, 0),
-    0
-  );
+
+  // Flatten all rolls, newest first
+  const allRolls = groups
+    .flatMap((g) => g.rolls)
+    .sort((a, b) => {
+      const da = a.date ? new Date(a.date).getTime() : 0;
+      const db = b.date ? new Date(b.date).getTime() : 0;
+      return db - da || b.rollNumber - a.rollNumber;
+    });
+
+  const totalPhotos = allRolls.reduce((acc, r) => acc + r.photos.length, 0);
 
   return (
     <main>
@@ -23,7 +65,7 @@ export default async function HomePage() {
         background: "var(--bg)",
         borderBottom: "1.5px solid var(--border)",
       }}>
-        <span style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", fontWeight: 300, letterSpacing: "-0.01em", color: "var(--text)" }}>
+        <span style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", fontWeight: 700, letterSpacing: "-0.01em", color: "var(--text)" }}>
           FILMEE
         </span>
         <NewRollButton />
@@ -41,12 +83,10 @@ export default async function HomePage() {
           FILMEE
         </h1>
         <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.82rem", letterSpacing: "0.12em", color: "var(--text-muted)" }}>
-          {String(totalRolls).padStart(2, "0")} ROLLS
-          <span style={{ margin: "0 0.75rem", color: "var(--border)" }}>·</span>
+          {String(allRolls.length).padStart(2, "0")} ROLLS
+          <span style={{ margin: "0 0.75rem", color: "var(--border-soft)" }}>·</span>
           {String(totalPhotos).padStart(4, "0")} FRAMES
         </div>
-
-        {/* Scroll hint */}
         <div
           className="absolute bottom-8 right-8"
           style={{ color: "var(--text-dim)", fontFamily: "var(--font-mono)", fontSize: "0.72rem", letterSpacing: "0.15em" }}
@@ -55,16 +95,16 @@ export default async function HomePage() {
         </div>
       </div>
 
-      {/* ── Archive ── */}
+      {/* ── All rolls flat grid ── */}
       <div className="max-w-6xl mx-auto px-6 pt-16 pb-28">
-        {groups.length === 0 ? (
+        {allRolls.length === 0 ? (
           <p style={{ color: "var(--text-dim)", fontSize: "0.82rem", letterSpacing: "0.15em", fontFamily: "var(--font-mono)" }}>
-            NO ROLLS YET — OPEN /ADMIN TO BEGIN
+            NO ROLLS YET — CLICK + NEW ROLL TO BEGIN
           </p>
         ) : (
-          <div style={{ display: "flex", flexDirection: "column", gap: "4.5rem" }}>
-            {groups.map((group) => (
-              <FilmStockSection key={group.filmStock} group={group} />
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            {allRolls.map((roll) => (
+              <RollCard key={roll.id} roll={roll} />
             ))}
           </div>
         )}
