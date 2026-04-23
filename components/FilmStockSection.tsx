@@ -22,18 +22,14 @@ export default function FilmStockSection({ group }: FilmStockSectionProps) {
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
         {group.rolls.map((roll, index) => (
-          <Link key={roll.id} href={`/roll/${roll.id}`} className="group block">
-            {/* Film icon thumbnail */}
-            <div
-              className="mb-3 flex items-center justify-center transition-opacity group-hover:opacity-60"
-              style={{ aspectRatio: "1", background: "var(--bg-surface)" }}
-            >
+          <Link key={roll.id} href={`/roll/${roll.id}`} className="roll-card block">
+            {/* Film icon — no background, just the icon with scale-up on hover */}
+            <div className="mb-3 flex items-center justify-center overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/film-icon.png"
                 alt="film roll"
-                className="w-4/5 object-contain"
-                style={{ filter: "none" }}
+                className="roll-card-icon w-full object-contain"
               />
             </div>
 

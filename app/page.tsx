@@ -1,5 +1,6 @@
 import { getGroupedByFilmStock } from "@/lib/data";
 import FilmStockSection from "@/components/FilmStockSection";
+import NewRollButton from "@/components/NewRollButton";
 
 export const dynamic = "force-dynamic";
 
@@ -13,6 +14,22 @@ export default async function HomePage() {
 
   return (
     <main>
+      {/* ── Top nav ── */}
+      <nav style={{
+        position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
+        height: "52px",
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        padding: "0 2rem",
+        background: "rgba(255,255,255,0.92)",
+        backdropFilter: "blur(8px)",
+        borderBottom: "1px solid var(--border)",
+      }}>
+        <span style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", fontWeight: 300, letterSpacing: "-0.01em", color: "var(--text)" }}>
+          FILMEE
+        </span>
+        <NewRollButton />
+      </nav>
+
       {/* ── Hero ── */}
       <div
         className="relative flex flex-col justify-end px-8 md:px-14"
