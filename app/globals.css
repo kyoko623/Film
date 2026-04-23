@@ -65,5 +65,14 @@ body {
   transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .roll-card:hover .roll-card-icon {
-  transform: scale(1.12);
+  transform: scale(1.08);
+}
+
+/* ── Upload action: hidden until hover ── */
+.upload-action {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.roll-card:hover .upload-action {
+  opacity: 1;
 }

@@ -11,38 +11,50 @@ function filmIcon(filmStock: string): string {
 }
 
 function RollCard({ roll }: { roll: FilmRoll }) {
+  const validStock = roll.filmStock && isNaN(Number(roll.filmStock));
   return (
-    <div>
-    <Link href={`/roll/${roll.id}`} className="roll-card block">
-      {/* Icon container — fixed height so both icons appear the same size */}
-      <div style={{ height: "140px", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "0.75rem" }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={filmIcon(roll.filmStock)}
-          alt={roll.filmStock}
-          className="roll-card-icon"
-          style={{ height: "100%", width: "auto", objectFit: "contain" }}
-        />
-      </div>
-
-      {/* Metadata */}
-      <div style={{ fontSize: "0.75rem", letterSpacing: "0.06em", lineHeight: 1.8, fontFamily: "var(--font-mono)" }}>
-        {/* Only show filmStock if it looks like a real brand name (not a leftover number) */}
-        {roll.filmStock && isNaN(Number(roll.filmStock)) && (
-          <div style={{ color: "var(--text-dim)", fontSize: "0.65rem", letterSpacing: "0.1em" }}>
-            {roll.filmStock.toUpperCase()}
-          </div>
-        )}
-        <div style={{ color: "var(--text)", fontWeight: 700 }}>
-          ROLL #{roll.rollNumber}
+    <div className="roll-card" style={{ cursor: "pointer" }}>
+      <Link href={`/roll/${roll.id}`} style={{ display: "block", textDecoration: "none" }}>
+        {/* Icon: fixed width, natural height, bottom-aligned so all canisters sit on same baseline */}
+        <div style={{
+          height: "170px",
+          display: "flex",
+          alignItems: "flex-end",
+          justifyContent: "center",
+          marginBottom: "0.9rem",
+        }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={filmIcon(roll.filmStock)}
+            alt=""
+            className="roll-card-icon"
+            style={{ width: "80px", height: "auto" }}
+          />
         </div>
-        {roll.location && (
-          <div className="truncate" style={{ color: "var(--text-muted)" }}>{roll.location}</div>
-        )}
-        <div style={{ color: "var(--text-dim)" }}>{roll.date}</div>
+
+        {/* Metadata */}
+        <div style={{ fontFamily: "var(--font-mono)", lineHeight: 1.7 }}>
+          <div style={{ fontSize: "0.88rem", fontWeight: 700, color: "var(--text)", letterSpacing: "0.05em" }}>
+            ROLL #{roll.rollNumber}
+          </div>
+          {validStock && (
+            <div style={{ fontSize: "0.65rem", color: "var(--text-dim)", letterSpacing: "0.1em" }}>
+              {roll.filmStock.toUpperCase()}
+            </div>
+          )}
+          {roll.location && (
+            <div className="truncate" style={{ fontSize: "0.72rem", color: "var(--text-muted)" }}>{roll.location}</div>
+          )}
+          {roll.date && isNaN(Number(roll.date)) && (
+            <div style={{ fontSize: "0.68rem", color: "var(--text-dim)" }}>{roll.date}</div>
+          )}
+        </div>
+      </Link>
+
+      {/* Upload — only visible on hover */}
+      <div className="upload-action" style={{ marginTop: "0.4rem" }}>
+        <UploadToRoll rollId={roll.id} />
       </div>
-    </Link>
-    <UploadToRoll rollId={roll.id} />
     </div>
   );
 }
