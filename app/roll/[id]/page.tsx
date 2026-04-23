@@ -3,6 +3,8 @@ import Link from "next/link";
 import { getRollById } from "@/lib/data";
 import FilmStrip from "@/components/FilmStrip";
 
+export const dynamic = "force-dynamic";
+
 interface PageProps {
   params: Promise<{ id: string }>;
 }
