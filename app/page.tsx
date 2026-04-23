@@ -27,9 +27,12 @@ function RollCard({ roll }: { roll: FilmRoll }) {
 
       {/* Metadata */}
       <div style={{ fontSize: "0.75rem", letterSpacing: "0.06em", lineHeight: 1.8, fontFamily: "var(--font-mono)" }}>
-        <div style={{ color: "var(--text-dim)", fontSize: "0.65rem", letterSpacing: "0.1em" }}>
-          {roll.filmStock.toUpperCase()}
-        </div>
+        {/* Only show filmStock if it looks like a real brand name (not a leftover number) */}
+        {roll.filmStock && isNaN(Number(roll.filmStock)) && (
+          <div style={{ color: "var(--text-dim)", fontSize: "0.65rem", letterSpacing: "0.1em" }}>
+            {roll.filmStock.toUpperCase()}
+          </div>
+        )}
         <div style={{ color: "var(--text)", fontWeight: 700 }}>
           ROLL #{roll.rollNumber}
         </div>
