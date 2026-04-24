@@ -79,13 +79,11 @@ function MetadataPanel({ roll }: { roll: FilmRoll }) {
 function FilmFrame({
   photo,
   index,
-  revealed,
   onOpen,
   didMoveRef,
 }: {
   photo: Photo;
   index: number;
-  revealed: boolean;
   onOpen: () => void;
   didMoveRef: React.RefObject<boolean>;
 }) {
@@ -101,9 +99,8 @@ function FilmFrame({
         position: "relative",
         overflow: "hidden",
         borderRight: "1px solid var(--border)",
-        clipPath: revealed ? "inset(0 0% 0 0)" : "inset(0 100% 0 0)",
-        opacity: revealed ? 1 : 0,
-        transition: `clip-path 0.55s cubic-bezier(0.22,1,0.36,1) ${index * 0.025}s, opacity 0.35s ease ${index * 0.025}s`,
+        // Always visible; CSS keyframe adds a staggered reveal on mount
+        animation: `frame-reveal 0.5s cubic-bezier(0.22,1,0.36,1) ${index * 0.04}s both`,
       }}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -257,7 +254,6 @@ function Lightbox({
 export default function FilmStrip({ roll }: { roll: FilmRoll }) {
   const stripRef = useRef<HTMLDivElement>(null);
   const [lightbox, setLightbox] = useState<number | null>(null);
-  const [revealed, setRevealed] = useState<Set<number>>(new Set());
   const didMoveRef = useRef(false);
   const dragRef = useRef({ active: false, startX: 0, startScroll: 0 });
 
@@ -290,27 +286,6 @@ export default function FilmStrip({ roll }: { roll: FilmRoll }) {
     }
   };
   const onPointerUp = () => { dragRef.current.active = false; };
-
-  // Frame reveal
-  useEffect(() => {
-    const el = stripRef.current;
-    if (!el || roll.photos.length === 0) return;
-    const frames = el.querySelectorAll("[data-frame]");
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const idx = Number((entry.target as HTMLElement).dataset.frame);
-            setRevealed((s) => new Set([...s, idx]));
-            obs.unobserve(entry.target);
-          }
-        });
-      },
-      { root: el, rootMargin: "0px 150px 0px 0px", threshold: 0.05 }
-    );
-    frames.forEach((f) => obs.observe(f));
-    return () => obs.disconnect();
-  }, [roll.photos.length]);
 
   const openLightbox = useCallback((i: number) => setLightbox(i), []);
   const closeLightbox = useCallback(() => setLightbox(null), []);
@@ -355,7 +330,6 @@ export default function FilmStrip({ roll }: { roll: FilmRoll }) {
               key={photo.id}
               photo={photo}
               index={i}
-              revealed={revealed.has(i)}
               onOpen={() => openLightbox(i)}
               didMoveRef={didMoveRef}
             />

@@ -64,6 +64,11 @@ body {
 }
 .film-strip-scroll::-webkit-scrollbar { display: none; }
 
+@keyframes frame-reveal {
+  from { clip-path: inset(0 100% 0 0); opacity: 0; }
+  to   { clip-path: inset(0 0% 0 0);   opacity: 1; }
+}
+
 .film-frame:hover { cursor: pointer; }
 .film-frame:hover img { opacity: 0.82 !important; }
 .film-frame:hover .frame-num { opacity: 1 !important; }
