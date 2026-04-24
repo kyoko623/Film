@@ -12,26 +12,24 @@ function filmIcon(filmStock: string): string {
 
 function RollCard({ roll }: { roll: FilmRoll }) {
   const validStock = roll.filmStock && isNaN(Number(roll.filmStock));
-  const isFuji = roll.filmStock.toLowerCase().includes("fuji");
-  // Kodak is visually heavier than Fuji; scale it down slightly to match
-  const iconHeight = isFuji ? 150 : 132;
   return (
     <div className="roll-card" style={{ cursor: "pointer" }}>
       <Link href={`/roll/${roll.id}`} style={{ display: "block", textDecoration: "none" }}>
-        {/* Icon: per-brand height so both canisters look the same visual size */}
+        {/* Icon: fixed square box with object-fit contain — same approach as selector */}
         <div style={{
-          height: "170px",
+          width: "130px",
+          height: "130px",
+          margin: "0 auto 0.9rem",
           display: "flex",
-          alignItems: "flex-end",
+          alignItems: "center",
           justifyContent: "center",
-          marginBottom: "0.9rem",
         }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={filmIcon(roll.filmStock)}
             alt=""
             className="roll-card-icon"
-            style={{ height: `${iconHeight}px`, width: "auto" }}
+            style={{ width: "100%", height: "100%", objectFit: "contain" }}
           />
         </div>
 

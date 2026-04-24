@@ -26,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh" className={`${dmSans.variable} ${spaceMono.variable} h-full`}>
-      <body className="min-h-full flex flex-col" style={{ background: "var(--bg)", color: "var(--text)" }}>
+      <body className="min-h-full flex flex-col" style={{ color: "var(--text)" }}>
         {children}
       </body>
     </html>
